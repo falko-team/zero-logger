@@ -12,7 +12,14 @@ public sealed class SimpleLogInterpolator : ILogInterpolator
     {
         AppendBlock(logBuilder, logContext.Time.DateTime.ToShortTimeString());
         AppendBlock(logBuilder, logContext.Level.ToString());
-        AppendBlock(logBuilder, logContext.Source);
+
+        var source = logContext.Source.AsSpan();
+
+        var dotIndex = source.LastIndexOf('.');
+
+        if (dotIndex != -1) source = source[(dotIndex + 1)..];
+
+        AppendBlock(logBuilder, new string(source));
 
         logBuilder.Append(logContext.Message);
 
