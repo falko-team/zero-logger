@@ -58,33 +58,23 @@ public static partial class LoggerRuntime
             {
                 cancellationTokenSource.Cancel();
             }
-#if DEBUG
             catch (Exception exception)
             {
+#if DEBUG
                 DebugEventLogger.Notify(exception, "Error while cancelling logger context");
-            }
-#else
-        catch
-        {
-            // Nothing to do
-        }
 #endif
+            }
 
             try
             {
                 cancellationTokenSource.Dispose();
             }
-#if DEBUG
             catch (Exception exception)
             {
+#if DEBUG
                 DebugEventLogger.Notify(exception, "Error while disposing logger context");
-            }
-#else
-        catch
-        {
-            // Nothing to do
-        }
 #endif
+            }
 
             var targets = loggerContext.Targets;
 
@@ -119,17 +109,12 @@ public static partial class LoggerRuntime
         {
             target.Initialize(cancellationToken);
         }
-#if DEBUG
         catch (Exception exception)
         {
+#if DEBUG
             DebugEventLogger.Notify(exception, "Error while initializing logger target");
-        }
-#else
-        catch
-        {
-            // Nothing to do
-        }
 #endif
+        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -139,16 +124,11 @@ public static partial class LoggerRuntime
         {
             target.Dispose(cancellationToken);
         }
-#if DEBUG
         catch (Exception exception)
         {
+#if DEBUG
             DebugEventLogger.Notify(exception, "Error while disposing logger target");
-        }
-#else
-        catch
-        {
-            // Nothing to do
-        }
 #endif
+        }
     }
 }
