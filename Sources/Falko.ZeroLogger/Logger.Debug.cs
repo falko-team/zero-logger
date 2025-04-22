@@ -158,6 +158,38 @@ public readonly partial struct Logger
 
     #endregion
 
+    #region Log(uint)
+
+    public void Debug([Localizable(false)][StructuredMessageTemplate] string? message,
+        uint argument)
+    {
+        Log(LogLevel.Debug, message,
+            argument);
+    }
+
+    public void Debug(Exception? exception, [Localizable(false)][StructuredMessageTemplate] string? message,
+        uint argument)
+    {
+        Log(LogLevel.Debug, exception, message,
+            argument);
+    }
+
+    public void Debug(LogMessageFactory messageFactory,
+        uint argument)
+    {
+        Log(LogLevel.Debug, messageFactory,
+            argument);
+    }
+
+    public void Debug(Exception? exception, LogMessageFactory messageFactory,
+        uint argument)
+    {
+        Log(LogLevel.Debug, exception, messageFactory,
+            argument);
+    }
+
+    #endregion
+
     #region Log(nuint)
 
     public void Debug([Localizable(false)][StructuredMessageTemplate] string? message,
