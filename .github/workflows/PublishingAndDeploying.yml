@@ -1,0 +1,43 @@
+name: Publishing and Deploying
+
+on:
+  push:
+    branches: [ "main" ]
+  release:
+    types: [ "created" ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+    - uses: actions/checkout@v4
+    - name: Preparing
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restoring
+      run: dotnet restore
+    - name: Preparing
+      id: get_version
+      run: |
+        VERSION=$(cat Common.Build.props | grep -oP '(?<=<Version>)[^<]+')
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+    - name: Publishing
+      run: |
+        for dir in ./Sources/*; do
+          if [[ -d "$dir" ]]; then
+            cd "$dir"
+            if [[ ${{ github.event_name }} == "release" ]]; then
+              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true
+            else
+              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true
+            fi
+            cd -
+          fi
+        done
+    - name: Deploying
+      run: |
+        dotnet nuget push --source https://api.nuget.org/v3/index.json ./Packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }}

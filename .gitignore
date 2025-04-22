@@ -1,5 +1,17 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+# IDE
+.idea/
+!/.idea/.idea.Falko.Talkie/.idea/discord.xml
+.vs/
+.vscode/
+
+# BUILD
+[Oo]utput/
+[Pp]ackages/
+[Bb]in/
+[Oo]bj/
+
+# SYSTEM
+.DS_Store
+
+# USER
+*.DotSettings.user

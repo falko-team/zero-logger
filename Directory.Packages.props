@@ -1,0 +1,5 @@
+<Project>
+    <ItemGroup Label="Dependencies">
+        <PackageVersion Include="JetBrains.Annotations" Version="2024.3.0" />
+    </ItemGroup>
+</Project>
