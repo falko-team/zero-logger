@@ -1,0 +1,41 @@
+<Project>
+    <Import Project="Common.Build.props" />
+
+    <PropertyGroup Label="Assembly">
+        <IsPackable>true</IsPackable>
+        <DebugType>portable</DebugType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <IncludeSource>true</IncludeSource>
+        <Deterministic>true</Deterministic>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+        <EnablePackageValidation>true</EnablePackageValidation>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Description">
+        <PackageProjectUrl>https://github.com/falko-team/zero-logger</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/falko-team/zero-logger.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>logger;falko</PackageTags>
+        <PackageReadmeFile>Assets/ReadMe.package.md</PackageReadmeFile>
+        <PackageLicenseFile>Assets/License.md</PackageLicenseFile>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+
+    <ItemGroup Label="Assets">
+        <None Include="../../License.md">
+            <Pack>true</Pack>
+            <Visible>false</Visible>
+            <PackagePath>Assets</PackagePath>
+        </None>
+        <None Include="../../ReadMe.package.md">
+            <Pack>true</Pack>
+            <Visible>false</Visible>
+            <PackagePath>Assets</PackagePath>
+        </None>
+    </ItemGroup>
+</Project>

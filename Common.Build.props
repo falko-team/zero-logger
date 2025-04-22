@@ -1,0 +1,23 @@
+<Project>
+    <Import Project="Directory.Build.props" Condition="!$(DirectoryBuildPropsImported)" />
+
+    <PropertyGroup Label="Assembly">
+        <Version>0.1.0</Version>
+        <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+        <IsAotCompatible>true</IsAotCompatible>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Language">
+        <RootNamespace>System.Logging</RootNamespace>
+        <LangVersion>13</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Description">
+        <Company>Falko Team</Company>
+        <Authors>Rima Falko; Timur Falko</Authors>
+        <Description>High-Performance Static Structured Logger with Minimal Allocations</Description>
+    </PropertyGroup>
+</Project>

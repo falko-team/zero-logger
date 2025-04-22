@@ -1,0 +1,21 @@
+name: Building and Testing
+
+on:
+  push:
+    branches-ignore: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Preparing
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    - name: Restoring
+      run: dotnet restore
+    - name: Building
+      run: dotnet build --no-restore
+#   - name: Testing
+#     run: dotnet test --verbosity normal
