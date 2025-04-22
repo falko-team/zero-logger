@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Examples.Build.props" />
 
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+    <PropertyGroup Label="Assembly">
+        <AssemblyName>Bot</AssemblyName>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Interpolators.Simple\Falko.ZeroLogger.Interpolators.Simple.csproj" />
-      <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Targets.File\Falko.ZeroLogger.Targets.File.csproj" />
-      <ProjectReference Include="..\..\Sources\Falko.ZeroLogger\Falko.ZeroLogger.csproj" />
+    <ItemGroup Label="Dependencies">
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger\Falko.ZeroLogger.csproj" />
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Interpolators.Simple\Falko.ZeroLogger.Interpolators.Simple.csproj" />
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Targets.File\Falko.ZeroLogger.Targets.File.csproj" />
     </ItemGroup>
-
 </Project>
