@@ -3241,17 +3241,12 @@ public readonly partial struct Logger(string name)
         {
             target.Publish(logContext, cancellationToken);
         }
-#if DEBUG
         catch (Exception exception)
         {
+#if DEBUG
             DebugEventLogger.Notify(exception, "Error while publishing log");
-        }
-#else
-        catch
-        {
-            // Nothing
-        }
 #endif
+        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
