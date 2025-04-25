@@ -9,19 +9,20 @@ internal sealed class PersistentLogInterpolator(ILogInterpolator interpolator) :
 
     public void Interpolate(in LogContext logContext, StringBuilder logBuilder)
     {
-        if (_cache is null)
+        if (_cache is not null)
         {
-            var from = logBuilder.Length;
-
-            interpolator.Interpolate(logContext, logBuilder);
-
-            var length = logBuilder.Length - from;
-
-            var cache = new char[length];
-            logBuilder.CopyTo(from, cache, 0, length);
-            _cache = cache;
+            logBuilder.Append(_cache, 0, _cache.Length);
+            return;
         }
 
-        logBuilder.Append(_cache, 0, _cache.Length);
+        var from = logBuilder.Length;
+
+        interpolator.Interpolate(logContext, logBuilder);
+
+        var length = logBuilder.Length - from;
+
+        var cache = new char[length];
+        logBuilder.CopyTo(from, cache, 0, length);
+        _cache = cache;
     }
 }
