@@ -3306,7 +3306,7 @@ public readonly partial struct Logger(string name)
 
     #endregion
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static void PublishLog(in LoggerContext loggerContext, in LogContext logContext)
     {
         var targets = loggerContext.Targets;
