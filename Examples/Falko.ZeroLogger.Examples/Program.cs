@@ -16,14 +16,12 @@ LoggerRuntime.Initialize(new LoggerContextBuilder()
 
 var logger = LoggerFactory.CreateLoggerOfType<Program>();
 
-var pi = Math.PI;
-
 // good for values with the lazy default to-string invocation for created before values
 // except custom structures, cause for them, need to use the LogMessageArgument<T> factory to avoid boxing
 logger.Info(static () => "PI is {0}", Math.PI);
 
 // good for custom structures or values with the lazy custom to-string invocation
-logger.Info(static () => "PI is {0}", new LogMessageArgument<double>(pi, static v => v.ToString("F")));
+logger.Info(static () => "PI is {0}", new LogMessageArgument<double>(Math.PI, static v => v.ToString("F")));
 
 // good for values that are creating lazy in the message factory to string
 logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
