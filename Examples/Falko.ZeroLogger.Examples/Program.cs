@@ -1,9 +1,13 @@
 ﻿using System.Logging.Builders;
+using System.Logging.Debugs;
 using System.Logging.Factories;
 using System.Logging.Interpolators;
 using System.Logging.Logs;
 using System.Logging.Runtimes;
 using System.Logging.Targets;
+
+DebugEventLogger.AddHandler(static (message, exception) => Console
+    .WriteLine($"Logger Internal Event: {message} {exception}"));
 
 LoggerRuntime.Initialize(new LoggerContextBuilder()
     .SetLevel(LogLevel.Trace)
@@ -14,14 +18,21 @@ var logger = LoggerFactory.CreateLoggerOfType<Program>();
 
 var pi = Math.PI;
 
-// good if inside argument
-logger.Info(() => "PI is {0}", () => Math.PI.ToString("F"));
+// good for values with the lazy default to-string invocation for created before values
+// except custom structures, cause for them, need to use the LogMessageArgument<T> factory to avoid boxing
+logger.Info(static () => "PI is {0}", Math.PI);
 
-// good for outside argument
-logger.Info(() => "PI is {0}", new LogMessageArgument<double>(pi, v => v.ToString("F")));
+// good for custom structures or values with the lazy custom to-string invocation
+logger.Info(static () => "PI is {0}", new LogMessageArgument<double>(pi, static v => v.ToString("F")));
 
-// bad for outside argument
-logger.Info(() => "PI is {0}", () => pi.ToString("F"));
+// good for values that are creating lazy in the message factory to string
+logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
+
+// good for string that is created before
+logger.Info(static () => "PI is {0}", "3.14");
+
+// good for string that don't created before
+logger.Info(static () => "PI is {0}", static () => "3.14");
 
 // for errors
 logger.Error(new Exception(), () => "Error handled");

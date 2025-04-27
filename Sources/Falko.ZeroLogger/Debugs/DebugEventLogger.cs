@@ -2,16 +2,30 @@ namespace System.Logging.Debugs;
 
 public static class DebugEventLogger
 {
-    public static event DebugLogEvent? Event;
+#if DEBUG
+    private static event DebugLogEventHandler? Handlers;
+#endif
 
-    public static void Notify(string? message) => Notify(null, message);
+    public static void AddHandler(DebugLogEventHandler handler)
+    {
+#if DEBUG
+        Handlers += handler;
+#endif
+    }
 
-    public static void Notify(Exception? exception, string? message)
+    public static void RemoveHandler(DebugLogEventHandler handler)
+    {
+#if DEBUG
+        Handlers -= handler;
+#endif
+    }
+
+    public static void Handle(string? message, Exception? exception = null)
     {
 #if DEBUG
         try
         {
-            Event?.Invoke(exception, message);
+            Handlers?.Invoke(message, exception);
         }
         catch
         {
