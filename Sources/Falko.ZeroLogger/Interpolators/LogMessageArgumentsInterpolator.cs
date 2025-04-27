@@ -6,7 +6,15 @@ namespace System.Logging.Interpolators;
 
 internal static class LogMessageArgumentsInterpolator
 {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private const string NullString = "null";
+
+    private const char ArgumentOpenBrace = '{';
+    private const char ArgumentCloseBrace = '}';
+
+    private const int DefaultMessageBuilderBufferCapacity = 256;
+    private const int DefaultMessageArgumentLength = 8;
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
     public static string? Interpolate(string? message,
         string? argument)
     {
@@ -117,6 +125,10 @@ internal static class LogMessageArgumentsInterpolator
 
         var arrays = ArrayPool<string?>.Shared;
 
+        var arguments = arrays.Rent(argumentsCount);
+
+        scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+
         try
         {
             Unsafe.Add(ref argumentsRef, 0) = argument1;
@@ -148,8 +160,54 @@ internal static class LogMessageArgumentsInterpolator
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public static string? InterpolateCore(string message, ref string? arguments, int count)
+    private static string InterpolateCore(string message, scoped ref string? argumentsRef, int argumentsCount)
     {
-        return message;
+        using scoped var messageBuilder = new ValueStringBuilder(stackalloc char[DefaultMessageBuilderBufferCapacity]);
+
+        var messageLength = message.Length;
+
+        messageBuilder.Grow(messageLength * argumentsCount * DefaultMessageArgumentLength);
+
+        scoped var messageSpan = message.AsSpan();
+
+        var messageIndex = 0;
+        var argumentIndex = -1;
+
+        for (;;)
+        {
+            var argumentOpenIndex = message.IndexOf(ArgumentOpenBrace, messageIndex);
+
+            if (argumentOpenIndex is -1)
+            {
+                messageBuilder.Append(messageSpan[messageIndex..]);
+                break;
+            }
+
+            messageBuilder.Append(messageSpan[messageIndex..argumentOpenIndex]);
+
+            var argumentCloseIndex = message.IndexOf(ArgumentCloseBrace, argumentOpenIndex + 1);
+
+            if (argumentCloseIndex is -1)
+            {
+                messageBuilder.Append(messageSpan[argumentOpenIndex..]);
+                break;
+            }
+
+            ++argumentIndex;
+
+            if (argumentIndex >= argumentsCount)
+            {
+                messageBuilder.Append(messageSpan[argumentOpenIndex..]);
+                break;
+            }
+
+            var argument = Unsafe.Add(ref argumentsRef, argumentIndex);
+
+            messageBuilder.Append(argument ?? NullString);
+
+            messageIndex = argumentCloseIndex + 1;
+        }
+
+        return messageBuilder.ToString();
     }
 }
