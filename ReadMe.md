@@ -4,6 +4,18 @@
 
 High-Performance Static Structured Logger with Minimal Allocations.
 
+```C#
+LoggerRuntime.Initialize(new LoggerContextBuilder()
+    .SetLevel(LogLevel.Info)
+    .AddTarget(SimpleLogInterpolator.Instance, new LoggerFileTarget("a", "./Logs")));
+
+var logger = LoggerFactory.CreateLoggerOfType<Program>();
+
+logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
+
+LoggerRuntime.Dispose();
+```
+
 ## License
 
 This project is licensed under the [BSD 2-Clause License](License.md).
