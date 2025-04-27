@@ -51,7 +51,7 @@ public ref struct ValueStringBuilder : IDisposable
         }
     }
 
-    [MethodImpl(MethodImplOptions.NoInlining)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(scoped ReadOnlySpan<char> symbols)
     {
         var length = symbols.Length;
@@ -63,7 +63,19 @@ public ref struct ValueStringBuilder : IDisposable
         _position += length;
     }
 
-    [MethodImpl(MethodImplOptions.NoInlining)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Append(string symbols)
+    {
+        var length = symbols.Length;
+
+        if (length is 0) return;
+
+        symbols.CopyTo(_buffer[_position..]);
+
+        _position += length;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(char symbol)
     {
         _buffer[_position] = symbol;
