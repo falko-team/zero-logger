@@ -165,11 +165,11 @@ internal static class LogMessageArgumentsInterpolationUtils
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static string InterpolateCore(string message, scoped ref string? argumentsRef, int argumentsCount)
     {
-        using scoped var messageBuilder = new ValueStringBuilder(stackalloc char[DefaultMessageBuilderBufferCapacity]);
+        var messageLength = message.Length * argumentsCount * DefaultMessageArgumentLength;
 
-        var messageLength = message.Length;
-
-        messageBuilder.Grow(messageLength * argumentsCount * DefaultMessageArgumentLength);
+        using scoped var messageBuilder = messageLength > DefaultMessageBuilderBufferCapacity
+            ? new ValueStringBuilder(messageLength)
+            : new ValueStringBuilder(stackalloc char[messageLength]);
 
         scoped var messageSpan = message.AsSpan();
 
