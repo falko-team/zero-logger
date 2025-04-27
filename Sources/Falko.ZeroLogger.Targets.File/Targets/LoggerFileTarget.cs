@@ -2,7 +2,7 @@ using System.Globalization;
 using System.IO.Compression;
 using System.Logging.Contexts;
 using System.Logging.Debugs;
-using System.Logging.Interpolators;
+using System.Logging.Renderers;
 using System.Logging.Utils;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,10 +30,6 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     private readonly char[] _encodingBuffer;
 
-    private readonly int _convertingBufferCapacity;
-
-    private readonly StringBuilder _convertingBuffer;
-
     private readonly int _writingBufferCapacity;
 
     private readonly TimeSpan _writingBufferInterval;
@@ -55,7 +51,6 @@ public sealed class LoggerFileTarget : LoggerTarget
 
         WritingBufferInterval = TimeSpan.FromSeconds(5);
         EncodingBufferCapacity = Bytes.FromKilobytes(2);
-        ConvertingBufferCapacity = Bytes.FromKilobytes(4);
         WritingBufferCapacity = Bytes.FromKilobytes(512);
 
         _filePrefix = logFilePrefix;
@@ -78,12 +73,6 @@ public sealed class LoggerFileTarget : LoggerTarget
         init => _encodingBuffer = new char[_encodingBufferCapacity = value];
     }
 
-    public int ConvertingBufferCapacity
-    {
-        get => _convertingBufferCapacity;
-        init => _convertingBuffer = new StringBuilder(_convertingBufferCapacity = value);
-    }
-
     public int WritingBufferCapacity
     {
         get => _writingBufferCapacity;
@@ -100,8 +89,6 @@ public sealed class LoggerFileTarget : LoggerTarget
     {
         lock (_locker)
         {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(EncodingBufferCapacity, ConvertingBufferCapacity);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(ConvertingBufferCapacity, WritingBufferCapacity);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(WritingBufferCapacity, FileSizeForArchiving);
             ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(FileSizeForArchiving, 0);
 
@@ -119,7 +106,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
-    public override void Publish(in LogContext logContext, ILogInterpolator logInterpolator, CancellationToken cancellationToken)
+    public override void Publish(in LogContext logContext, ILogContextRenderer logContextRenderer, CancellationToken cancellationToken)
     {
         lock (_locker)
         {
@@ -132,7 +119,7 @@ public sealed class LoggerFileTarget : LoggerTarget
                 SplitLogsToArchive();
             }
 
-            TransferLogToWritingBuffer(logContext, logInterpolator);
+            TransferLogToWritingBuffer(logContext, logContextRenderer);
 
             if (IsWritingBufferWritingThresholdReached(logContext.Time.UtcDateTime) is false)
             {
@@ -612,17 +599,11 @@ public sealed class LoggerFileTarget : LoggerTarget
     #region Buffers
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void TransferLogToWritingBuffer(in LogContext logContext, ILogInterpolator logInterpolator)
+    private void TransferLogToWritingBuffer(in LogContext logContext, ILogContextRenderer logContextRenderer)
     {
         try
         {
-            _convertingBuffer.Clear();
-
-            logInterpolator.Interpolate(logContext, _convertingBuffer);
-
-            _convertingBuffer.Append(FileNewLine);
-
-            CopyTo(_convertingBuffer, _writingBuffer, _encodingBuffer, FileEncoding);
+            CopyTo(logContextRenderer.Render(logContext), _writingBuffer, _encodingBuffer, FileEncoding);
         }
         catch (Exception exception)
         {
@@ -749,7 +730,7 @@ public sealed class LoggerFileTarget : LoggerTarget
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    private static void CopyTo(StringBuilder builder, MemoryStream stream, char[] buffer, Encoding encoding)
+    private static void CopyTo(string builder, MemoryStream stream, char[] buffer, Encoding encoding)
     {
         var builderLength = builder.Length;
         var bufferLength = buffer.Length;

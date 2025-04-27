@@ -9,15 +9,15 @@ internal readonly struct LoggerContext
 
     public readonly LoggerTarget[] Targets;
 
-    public readonly LogInterpolatorSpan[] Interpolators;
+    public readonly LogContextRendererSpan[] Renderers;
 
     public readonly CancellationToken CancellationToken;
 
-    internal LoggerContext(LogLevel minimumLevel, LoggerTarget[] targets, LogInterpolatorSpan[] interpolators, CancellationToken cancellationToken)
+    internal LoggerContext(LogLevel minimumLevel, LoggerTarget[] targets, LogContextRendererSpan[] renderers, CancellationToken cancellationToken)
     {
         MinimumLevel = minimumLevel;
         Targets = targets;
-        Interpolators = interpolators;
+        Renderers = renderers;
         CancellationToken = cancellationToken;
     }
 }

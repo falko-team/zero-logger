@@ -1,13 +1,13 @@
 using System.Logging.Contexts;
-using System.Logging.Interpolators;
 using System.Logging.Logs;
+using System.Logging.Renderers;
 using System.Logging.Targets;
 
 namespace System.Logging.Builders;
 
 public ref struct LoggerContextBuilder()
 {
-    private readonly Dictionary<ILogInterpolator, List<LoggerTarget>> _targets = new();
+    private readonly Dictionary<ILogContextRenderer, List<LoggerTarget>> _targets = new();
 
     private LogLevel _minimumLevel = LogLevel.Trace;
 
@@ -17,18 +17,18 @@ public ref struct LoggerContextBuilder()
         return this;
     }
 
-    public LoggerContextBuilder AddTarget(ILogInterpolator interpolator, LoggerTarget target)
+    public LoggerContextBuilder AddTarget(ILogContextRenderer contextRenderer, LoggerTarget target)
     {
-        ArgumentNullException.ThrowIfNull(interpolator, nameof(interpolator));
+        ArgumentNullException.ThrowIfNull(contextRenderer, nameof(contextRenderer));
         ArgumentNullException.ThrowIfNull(target, nameof(target));
 
-        if (_targets.TryGetValue(interpolator, out var targets))
+        if (_targets.TryGetValue(contextRenderer, out var targets))
         {
             targets.Add(target);
         }
         else
         {
-            _targets[interpolator] = [target];
+            _targets[contextRenderer] = [target];
         }
 
         return this;
@@ -37,13 +37,13 @@ public ref struct LoggerContextBuilder()
     internal LoggerContext Build(CancellationToken cancellationToken)
     {
         var targets = new List<LoggerTarget>();
-        var interpolators = new List<LogInterpolatorSpan>();
+        var interpolators = new List<LogContextRendererSpan>();
 
         foreach (var interpolatorTargets in _targets)
         {
             targets.AddRange(interpolatorTargets.Value);
 
-            interpolators.Add(new LogInterpolatorSpan(interpolatorTargets.Key, interpolatorTargets.Value.Count));
+            interpolators.Add(new LogContextRendererSpan(interpolatorTargets.Key, interpolatorTargets.Value.Count));
         }
 
         return new LoggerContext(_minimumLevel, targets.ToArray(), interpolators.ToArray(), cancellationToken);

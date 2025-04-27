@@ -1,9 +1,8 @@
 using System.Logging.Contexts;
 using System.Logging.Debugs;
 using System.Logging.Factories;
-using System.Logging.Interpolators;
 using System.Logging.Logs;
-using System.Logging.Providers;
+using System.Logging.Renderers;
 using System.Logging.Runtimes;
 using System.Logging.Targets;
 using System.Numerics;
@@ -28,7 +27,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleMessageLogMessageProvider(message);
+        var messageProvider = new SingleMessageLogMessageRenderer(message);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
     }
@@ -44,7 +43,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleMessageLogMessageProvider(message);
+        var messageProvider = new SingleMessageLogMessageRenderer(message);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
         {
@@ -61,7 +60,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleMessageFactoryLogMessageProvider(messageFactory);
+        var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
     }
@@ -75,7 +74,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleMessageFactoryLogMessageProvider(messageFactory);
+        var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
         {
@@ -1653,7 +1652,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleStringArgumentMessageLogMessageProvider(message,
+        var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -1671,7 +1670,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleStringArgumentMessageLogMessageProvider(message,
+        var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -1690,7 +1689,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleStringArgumentMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -1706,7 +1705,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleStringArgumentMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -1732,7 +1731,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2);
 
@@ -1752,7 +1751,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2);
 
@@ -1773,7 +1772,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2);
 
@@ -1791,7 +1790,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2);
 
@@ -1819,7 +1818,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3);
@@ -1841,7 +1840,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3);
@@ -1864,7 +1863,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -1884,7 +1883,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -1914,7 +1913,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3,
@@ -1938,7 +1937,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3,
@@ -1963,7 +1962,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -1985,7 +1984,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -2013,7 +2012,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2031,7 +2030,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyStringArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2050,7 +2049,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2066,7 +2065,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2091,7 +2090,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleInstanceArgumentMessageLogMessageProvider<T>(message, argument);
+        var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
     }
@@ -2108,7 +2107,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleInstanceArgumentMessageLogMessageProvider<T>(message, argument);
+        var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
         {
@@ -2126,7 +2125,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageProvider<T>(messageFactory, argument);
+        var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
     }
@@ -2141,7 +2140,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageProvider<T>(messageFactory, argument);
+        var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider) { Exception = exception });
     }
@@ -2163,7 +2162,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoInstanceArgumentsMessageLogMessageProvider<T1, T2>(message,
+        var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
@@ -2183,7 +2182,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoInstanceArgumentsMessageLogMessageProvider<T1, T2>(message,
+        var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
@@ -2204,7 +2203,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2>(messageFactory,
+        var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
@@ -2222,7 +2221,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2>(messageFactory,
+        var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
@@ -2250,7 +2249,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeInstanceArgumentsMessageLogMessageProvider<T1, T2, T3>(message,
+        var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
@@ -2272,7 +2271,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeInstanceArgumentsMessageLogMessageProvider<T1, T2, T3>(message,
+        var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
@@ -2295,7 +2294,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2, T3>(messageFactory,
+        var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -2315,7 +2314,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2, T3>(messageFactory,
+        var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -2345,7 +2344,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourInstanceArgumentsMessageLogMessageProvider<T1, T2, T3, T4>(message,
+        var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
             argument2,
             argument3,
@@ -2369,7 +2368,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourInstanceArgumentsMessageLogMessageProvider<T1, T2, T3, T4>(message,
+        var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
             argument2,
             argument3,
@@ -2394,7 +2393,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2, T3, T4>(messageFactory,
+        var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -2416,7 +2415,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageProvider<T1, T2, T3, T4>(messageFactory,
+        var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -2444,7 +2443,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyInstanceArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2462,7 +2461,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyInstanceArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2481,7 +2480,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2497,7 +2496,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2522,7 +2521,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleArgumentMessageLogMessageProvider<T>(message,
+        var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2540,7 +2539,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleArgumentMessageLogMessageProvider<T>(message,
+        var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2559,7 +2558,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleArgumentMessageFactoryLogMessageProvider<T>(messageFactory,
+        var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2575,7 +2574,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleArgumentMessageFactoryLogMessageProvider<T>(messageFactory,
+        var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2601,7 +2600,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoArgumentsMessageLogMessageProvider<T1, T2>(message,
+        var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
@@ -2621,7 +2620,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoArgumentsMessageLogMessageProvider<T1, T2>(message,
+        var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
@@ -2642,7 +2641,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoArgumentsMessageFactoryLogMessageProvider<T1, T2>(messageFactory,
+        var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
@@ -2660,7 +2659,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoArgumentsMessageFactoryLogMessageProvider<T1, T2>(messageFactory,
+        var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
@@ -2688,7 +2687,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeArgumentsMessageLogMessageProvider<T1, T2, T3>(message,
+        var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
@@ -2710,7 +2709,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeArgumentsMessageLogMessageProvider<T1, T2, T3>(message,
+        var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
@@ -2733,7 +2732,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeArgumentsMessageFactoryLogMessageProvider<T1, T2, T3>(messageFactory,
+        var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -2753,7 +2752,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeArgumentsMessageFactoryLogMessageProvider<T1, T2, T3>(messageFactory,
+        var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
@@ -2783,7 +2782,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourArgumentsMessageLogMessageProvider<T1, T2, T3, T4>(message,
+        var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
             argument2,
             argument3,
@@ -2807,7 +2806,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourArgumentsMessageLogMessageProvider<T1, T2, T3, T4>(message,
+        var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
             argument2,
             argument3,
@@ -2832,7 +2831,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourArgumentsMessageFactoryLogMessageProvider<T1, T2, T3, T4>(messageFactory,
+        var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -2854,7 +2853,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourArgumentsMessageFactoryLogMessageProvider<T1, T2, T3, T4>(messageFactory,
+        var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
             argument2,
             argument3,
@@ -2882,7 +2881,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleFactoryArgumentMessageLogMessageProvider(message,
+        var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2900,7 +2899,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleFactoryArgumentMessageLogMessageProvider(message,
+        var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2919,7 +2918,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -2935,7 +2934,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -2961,7 +2960,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2);
 
@@ -2981,7 +2980,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2);
 
@@ -3002,7 +3001,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2);
 
@@ -3020,7 +3019,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2);
 
@@ -3048,7 +3047,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
@@ -3070,7 +3069,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
@@ -3093,7 +3092,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
@@ -3113,7 +3112,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
@@ -3143,7 +3142,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3,
@@ -3167,7 +3166,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3,
@@ -3192,7 +3191,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3,
@@ -3214,7 +3213,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3,
@@ -3242,7 +3241,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -3260,7 +3259,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyFactoryArgumentsMessageLogMessageProvider(message,
+        var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -3279,7 +3278,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
@@ -3295,7 +3294,7 @@ public readonly partial struct Logger(string name)
 
         var time = DateTimeOffset.Now;
 
-        var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageProvider(messageFactory,
+        var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);
 
         PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
@@ -3310,7 +3309,7 @@ public readonly partial struct Logger(string name)
     private static void PublishLog(in LoggerContext loggerContext, in LogContext logContext)
     {
         var targets = loggerContext.Targets;
-        var interpolators = loggerContext.Interpolators;
+        var interpolators = loggerContext.Renderers;
 
         var targetsLength = targets.Length;
 
@@ -3325,14 +3324,14 @@ public readonly partial struct Logger(string name)
 
             if (interpolatorsLength > 1)
             {
-                ref var interpolatorsRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Interpolators);
+                ref var interpolatorsRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Renderers);
 
                 var targetIndex = 0;
 
                 for (var interpolatorIndex = 0; interpolatorIndex < interpolatorsLength; interpolatorIndex++)
                 {
                     var logInterpolatorSpan = Unsafe.Add(ref interpolatorsRef, interpolatorIndex);
-                    var logInterpolatorSpanLength = logInterpolatorSpan.Length;
+                    var logInterpolatorSpanLength = logInterpolatorSpan.Count;
 
                     if (logInterpolatorSpanLength is 1)
                     {
@@ -3340,12 +3339,12 @@ public readonly partial struct Logger(string name)
 
                         ++targetIndex;
 
-                        PublishLog(target, logContext, logInterpolatorSpan.Interpolator, cancellationToken);
+                        PublishLog(target, logContext, logInterpolatorSpan.Renderer, cancellationToken);
 
                         continue;
                     }
 
-                    var logInterpolator = new PersistentLogInterpolator(logInterpolatorSpan.Interpolator);
+                    var logInterpolator = new PersistentLogContextRenderer(logInterpolatorSpan.Renderer);
 
                     for (var i = 0; i < logInterpolatorSpanLength; i++)
                     {
@@ -3359,7 +3358,7 @@ public readonly partial struct Logger(string name)
             }
             else
             {
-                var logInterpolator = new PersistentLogInterpolator(interpolators[0].Interpolator);
+                var logInterpolator = new PersistentLogContextRenderer(interpolators[0].Renderer);
 
                 for (var targetIndex = 0; targetIndex < targetsLength; targetIndex++)
                 {
@@ -3371,16 +3370,16 @@ public readonly partial struct Logger(string name)
         }
         else if (targetsLength is 1)
         {
-            PublishLog(targets[0], logContext, interpolators[0].Interpolator, loggerContext.CancellationToken);
+            PublishLog(targets[0], logContext, interpolators[0].Renderer, loggerContext.CancellationToken);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void PublishLog(in LoggerTarget target, in LogContext logContext, ILogInterpolator logInterpolator, CancellationToken cancellationToken)
+    private static void PublishLog(in LoggerTarget target, in LogContext logContext, ILogContextRenderer logContextRenderer, CancellationToken cancellationToken)
     {
         try
         {
-            target.Publish(logContext, logInterpolator, cancellationToken);
+            target.Publish(logContext, logContextRenderer, cancellationToken);
         }
         catch (Exception exception)
         {
