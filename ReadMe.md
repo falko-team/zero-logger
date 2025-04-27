@@ -11,7 +11,7 @@ LoggerRuntime.Initialize(new LoggerContextBuilder()
 
 var logger = LoggerFactory.CreateLoggerOfType<Program>();
 
-logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
+logger.Info(static () => "PI is {PI}", static () => Math.PI.ToString("F"));
 
 LoggerRuntime.Dispose();
 ```
