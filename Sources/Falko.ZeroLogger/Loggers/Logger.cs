@@ -3385,7 +3385,7 @@ public readonly partial struct Logger(string name)
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while publishing log");
+            DebugEventLogger.Handle("Error while publishing log", exception);
 #endif
         }
     }

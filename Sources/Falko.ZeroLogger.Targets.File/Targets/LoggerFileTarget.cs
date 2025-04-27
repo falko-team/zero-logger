@@ -113,7 +113,7 @@ public sealed class LoggerFileTarget : LoggerTarget
             if (SyncLogs() is false)
             {
 #if DEBUG
-                DebugEventLogger.Notify("Error while trying to sync logs file when initializing target");
+                DebugEventLogger.Handle("Error while trying to sync logs file when initializing target");
 #endif
 
                 return;
@@ -168,7 +168,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while closing writing buffer");
+            DebugEventLogger.Handle(exception, "Error while closing writing buffer");
 #endif
         }
     }
@@ -189,7 +189,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while creating logs directory");
+            DebugEventLogger.Handle(exception, "Error while creating logs directory");
 #endif
         }
     }
@@ -215,7 +215,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while checking logs file size");
+            DebugEventLogger.Handle(exception, "Error while checking logs file size");
 #endif
 
             return false;
@@ -242,7 +242,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while opening logs file");
+            DebugEventLogger.Handle(exception, "Error while opening logs file");
 #endif
 
             if (retry is false)
@@ -277,7 +277,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while flusinh logs file");
+            DebugEventLogger.Handle(exception, "Error while flusinh logs file");
 #endif
         }
 
@@ -288,7 +288,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-	        DebugEventLogger.Notify(exception, "Error while closing logs file");
+	        DebugEventLogger.Handle(exception, "Error while closing logs file");
 #endif
         }
 
@@ -415,7 +415,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while archiving logs");
+            DebugEventLogger.Handle(exception, "Error while archiving logs");
 #endif
 
             RemoveFile(path);
@@ -445,7 +445,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while archiving logs");
+            DebugEventLogger.Handle(exception, "Error while archiving logs");
 #endif
 
             RemoveFile(archivePath);
@@ -476,7 +476,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while archiving logs");
+            DebugEventLogger.Handle(exception, "Error while archiving logs");
 #endif
         }
     }
@@ -501,7 +501,7 @@ public sealed class LoggerFileTarget : LoggerTarget
                 catch (Exception exception)
                 {
 #if DEBUG
-                    DebugEventLogger.Notify(exception, "Error while deleting old archives");
+                    DebugEventLogger.Handle(exception, "Error while deleting old archives");
 #endif
                 }
             }
@@ -509,7 +509,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while deleting old archives");
+            DebugEventLogger.Handle(exception, "Error while deleting old archives");
 #endif
         }
     }
@@ -551,7 +551,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while getting last archive index");
+            DebugEventLogger.Handle(exception, "Error while getting last archive index");
 #endif
 
             return 0;
@@ -635,7 +635,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while writing to writing buffer");
+            DebugEventLogger.Handle(exception, "Error while writing to writing buffer");
 #endif
         }
     }
@@ -658,7 +658,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while writing to file stream from writing buffer");
+            DebugEventLogger.Handle(exception, "Error while writing to file stream from writing buffer");
 #endif
 
             if (retry && SyncLogsFile())
@@ -742,7 +742,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while removing file");
+            DebugEventLogger.Handle(exception, "Error while removing file");
 #endif
 
             return false;
