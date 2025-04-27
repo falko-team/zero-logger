@@ -12,24 +12,27 @@ internal static class LogMessageArgumentsInterpolator
     {
         if (message is null) return null;
 
-        const int argumentCount = 1;
+        var argumentStartIndex = message.IndexOf(ArgumentOpenBrace);
+        if (argumentStartIndex is -1) return message;
 
-        var arrays = ArrayPool<string?>.Shared;
+        var argumentEndIndex = message.IndexOf(ArgumentCloseBrace, argumentStartIndex + 1);
+        if (argumentEndIndex is -1) return message;
 
-        var arguments = arrays.Rent(argumentCount);
+        scoped ReadOnlySpan<char> argumentSpan = argument ?? NullString;
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+        using scoped var messageBuilder = new ValueStringBuilder(stackalloc char[DefaultMessageBuilderBufferCapacity]);
 
-        Unsafe.Add(ref argumentsRef, 0) = argument;
+        const int argumentSymbolsCount = 2;
 
-        message = Interpolate(message, ref argumentsRef, argumentCount);
-        message = InterpolateCore(message, ref argumentsRef, argumentCount);
+        messageBuilder.Grow(message.Length + argumentSpan.Length - argumentSymbolsCount);
 
-        Unsafe.Add(ref argumentsRef, 0) = null;
+        scoped var messageSpan = message.AsSpan();
 
-        arrays.Return(arguments);
+        messageBuilder.Append(messageSpan[..argumentStartIndex]);
+        messageBuilder.Append(argumentSpan);
+        messageBuilder.Append(messageSpan[(argumentEndIndex + 1)..]);
 
-        return message;
+        return messageBuilder.ToString();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,23 +42,28 @@ internal static class LogMessageArgumentsInterpolator
     {
         if (message is null) return null;
 
-        const int argumentCount = 2;
+        const int argumentsCount = 2;
 
         var arrays = ArrayPool<string?>.Shared;
 
-        var arguments = arrays.Rent(argumentCount);
+        var arguments = arrays.Rent(argumentsCount);
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+        scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
 
-        Unsafe.Add(ref argumentsRef, 0) = argument1;
-        Unsafe.Add(ref argumentsRef, 1) = argument2;
+        try
+        {
+            Unsafe.Add(ref argumentsRef, 0) = argument1;
+            Unsafe.Add(ref argumentsRef, 1) = argument2;
 
-        message = InterpolateCore(message, ref argumentsRef, argumentCount);
+            message = InterpolateCore(message, ref argumentsRef, argumentsCount);
+        }
+        finally
+        {
+            Unsafe.Add(ref argumentsRef, 0) = null;
+            Unsafe.Add(ref argumentsRef, 1) = null;
 
-        Unsafe.Add(ref argumentsRef, 0) = null;
-        Unsafe.Add(ref argumentsRef, 1) = null;
-
-        arrays.Return(arguments);
+            arrays.Return(arguments);
+        }
 
         return message;
     }
@@ -68,25 +76,30 @@ internal static class LogMessageArgumentsInterpolator
     {
         if (message is null) return null;
 
-        const int argumentCount = 3;
+        const int argumentsCount = 3;
 
         var arrays = ArrayPool<string?>.Shared;
 
-        var arguments = arrays.Rent(argumentCount);
+        var arguments = arrays.Rent(argumentsCount);
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+        scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
 
-        Unsafe.Add(ref argumentsRef, 0) = argument1;
-        Unsafe.Add(ref argumentsRef, 1) = argument2;
-        Unsafe.Add(ref argumentsRef, 2) = argument3;
+        try
+        {
+            Unsafe.Add(ref argumentsRef, 0) = argument1;
+            Unsafe.Add(ref argumentsRef, 1) = argument2;
+            Unsafe.Add(ref argumentsRef, 2) = argument3;
 
-        message = InterpolateCore(message, ref argumentsRef, argumentCount);
+            message = InterpolateCore(message, ref argumentsRef, argumentsCount);
+        }
+        finally
+        {
+            Unsafe.Add(ref argumentsRef, 0) = null;
+            Unsafe.Add(ref argumentsRef, 1) = null;
+            Unsafe.Add(ref argumentsRef, 2) = null;
 
-        Unsafe.Add(ref argumentsRef, 0) = null;
-        Unsafe.Add(ref argumentsRef, 1) = null;
-        Unsafe.Add(ref argumentsRef, 2) = null;
-
-        arrays.Return(arguments);
+            arrays.Return(arguments);
+        }
 
         return message;
     }
@@ -100,28 +113,28 @@ internal static class LogMessageArgumentsInterpolator
     {
         if (message is null) return null;
 
-        const int argumentCount = 4;
+        const int argumentsCount = 4;
 
         var arrays = ArrayPool<string?>.Shared;
 
-        var arguments = arrays.Rent(argumentCount);
+        try
+        {
+            Unsafe.Add(ref argumentsRef, 0) = argument1;
+            Unsafe.Add(ref argumentsRef, 1) = argument2;
+            Unsafe.Add(ref argumentsRef, 2) = argument3;
+            Unsafe.Add(ref argumentsRef, 3) = argument4;
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+            message = InterpolateCore(message, ref argumentsRef, argumentsCount);
+        }
+        finally
+        {
+            Unsafe.Add(ref argumentsRef, 0) = null;
+            Unsafe.Add(ref argumentsRef, 1) = null;
+            Unsafe.Add(ref argumentsRef, 2) = null;
+            Unsafe.Add(ref argumentsRef, 3) = null;
 
-        Unsafe.Add(ref argumentsRef, 0) = argument1;
-        Unsafe.Add(ref argumentsRef, 1) = argument2;
-        Unsafe.Add(ref argumentsRef, 2) = argument3;
-        Unsafe.Add(ref argumentsRef, 3) = argument4;
-
-        message = InterpolateCore(message, ref argumentsRef, argumentCount);
-
-        Unsafe.Add(ref argumentsRef, 0) = null;
-        Unsafe.Add(ref argumentsRef, 1) = null;
-        Unsafe.Add(ref argumentsRef, 2) = null;
-        Unsafe.Add(ref argumentsRef, 3) = null;
-        Unsafe.Add(ref argumentsRef, 4) = null;
-
-        arrays.Return(arguments);
+            arrays.Return(arguments);
+        }
 
         return message;
     }
