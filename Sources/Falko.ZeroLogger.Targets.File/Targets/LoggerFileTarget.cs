@@ -47,6 +47,8 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     private FileStream? _logsStream;
 
+    private bool _isLogsStreamOpen;
+
     private DateTime _lastWritingBufferClearTime;
 
     public LoggerFileTarget(string logFilePrefix, string logsAndArchivesDirectoryPath)
@@ -126,7 +128,7 @@ public sealed class LoggerFileTarget : LoggerTarget
     {
         lock (_locker)
         {
-            if (IsLogsDateChangingRequired(logContext.Time.UtcDateTime))
+            if (IsLogsDateChangingRequired(logContext.Time.DateTime))
             {
                 MoveNextDateWithLogsArchivingOfPrevious();
             }
@@ -233,6 +235,8 @@ public sealed class LoggerFileTarget : LoggerTarget
         {
             _logsStream = OpenFileStream(_logsDate);
 
+            _isLogsStreamOpen = true;
+
             return true;
         }
         catch (Exception exception)
@@ -254,6 +258,11 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     private void CloseLogsFile()
 	{
+        if (_isLogsStreamOpen is false)
+        {
+            return;
+        }
+
         var logsStream = _logsStream;
 
         if (logsStream is null)
@@ -268,7 +277,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         catch (Exception exception)
         {
 #if DEBUG
-            DebugEventLogger.Notify(exception, "Error while closing logs file");
+            DebugEventLogger.Notify(exception, "Error while flusinh logs file");
 #endif
         }
 
@@ -282,6 +291,8 @@ public sealed class LoggerFileTarget : LoggerTarget
 	        DebugEventLogger.Notify(exception, "Error while closing logs file");
 #endif
         }
+
+        _isLogsStreamOpen = false;
 	}
 
     private bool RemoveFile()
