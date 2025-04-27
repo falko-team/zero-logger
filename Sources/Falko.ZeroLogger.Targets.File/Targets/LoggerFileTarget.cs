@@ -18,9 +18,6 @@ public sealed class LoggerFileTarget : LoggerTarget
 {
     private const string DateTimeFormat = "yyyy-MM-dd";
 
-    // ReSharper disable once StringLiteralTypo
-    private static readonly char[] SaltSamples = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
-
     private static readonly string ApplicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
     private readonly Lock _locker = new();
@@ -112,9 +109,7 @@ public sealed class LoggerFileTarget : LoggerTarget
 
             if (SyncLogs() is false)
             {
-#if DEBUG
                 DebugEventLogger.Handle("Error while trying to sync logs file when initializing target");
-#endif
 
                 return;
             }
@@ -159,6 +154,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void CloseWritingBuffer()
     {
         try
@@ -167,14 +163,13 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while closing writing buffer");
-#endif
+            DebugEventLogger.Handle("Error while closing writing buffer", exception);
         }
     }
 
     #region LogFiles
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void CreateLogsDirectoryIfNotExists()
     {
         try
@@ -188,12 +183,11 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while creating logs directory");
-#endif
+            DebugEventLogger.Handle("Error while creating logs directory", exception);
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private bool SyncLogs()
     {
         SyncLogsDate();
@@ -201,11 +195,13 @@ public sealed class LoggerFileTarget : LoggerTarget
         return SyncLogsFile();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void SyncLogsDate()
     {
         _logsDate = DateTime.Now.Date;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private bool IsLogsFileSplittingRequired()
     {
         try
@@ -214,19 +210,19 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while checking logs file size");
-#endif
+            DebugEventLogger.Handle("Error while checking logs file size", exception);
 
             return false;
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private bool IsLogsDateChangingRequired(DateTime dateTime)
     {
         return _logsDate != dateTime.Date;
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private bool SyncLogsFile(bool retry = true)
     {
 	    CloseLogsFile();
@@ -241,9 +237,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while opening logs file");
-#endif
+            DebugEventLogger.Handle("Error while opening logs file", exception);
 
             if (retry is false)
             {
@@ -256,6 +250,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void CloseLogsFile()
 	{
         if (_isLogsStreamOpen is false)
@@ -276,9 +271,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while flusinh logs file");
-#endif
+            DebugEventLogger.Handle("Error while fusing logs file", exception);
         }
 
         try
@@ -287,19 +280,19 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-	        DebugEventLogger.Handle(exception, "Error while closing logs file");
-#endif
+	        DebugEventLogger.Handle("Error while closing logs file", exception);
         }
 
         _isLogsStreamOpen = false;
 	}
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private bool RemoveFile()
     {
         return RemoveFile(_logsStream!.Name);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private FileStream OpenFileStream(DateTime fileDate)
     {
         var filePath = BuildFilePath(fileDate);
@@ -343,6 +336,7 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     #region ArchiveFiles
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void MoveNextDateWithLogsArchivingOfPrevious()
     {
         if (TransferWritingBufferToLogsStream() is false)
@@ -369,6 +363,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         DeleteDeprecatedLogsArchives();
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void SplitLogsToArchive()
     {
         if (TransferWritingBufferToLogsStream() is false)
@@ -393,11 +388,13 @@ public sealed class LoggerFileTarget : LoggerTarget
         SyncLogsFile();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private bool ArchiveLogs(out string path)
     {
 	    return ArchiveLogs(_logsStream!.Name, _logsDate, out path);
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private bool ArchiveLogs(string name, DateTime date, out string path)
     {
         var nextArchiveIndex = GetLastArchiveIndex(date) + 1;
@@ -414,9 +411,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while archiving logs");
-#endif
+            DebugEventLogger.Handle("Error while archiving logs", exception);
 
             RemoveFile(path);
 
@@ -424,6 +419,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private bool ArchiveLogs(byte[] bytes, string folderPath, string archiveName, string fileName)
     {
         var archivePath = Path.Combine(folderPath, archiveName);
@@ -444,9 +440,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while archiving logs");
-#endif
+            DebugEventLogger.Handle("Error while archiving logs", exception);
 
             RemoveFile(archivePath);
 
@@ -454,6 +448,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void ArchiveDeprecatedDaysLogs()
     {
         try
@@ -475,12 +470,11 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while archiving logs");
-#endif
+            DebugEventLogger.Handle("Error while archiving logs", exception);
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void DeleteDeprecatedLogsArchives()
     {
         try
@@ -500,20 +494,17 @@ public sealed class LoggerFileTarget : LoggerTarget
                 }
                 catch (Exception exception)
                 {
-#if DEBUG
-                    DebugEventLogger.Handle(exception, "Error while deleting old archives");
-#endif
+                    DebugEventLogger.Handle("Error while deleting old archives", exception);
                 }
             }
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while deleting old archives");
-#endif
+            DebugEventLogger.Handle("Error while deleting old archives", exception);
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private void ArchiveWritingBuffer()
     {
         if (_writingBuffer.Length is 0)
@@ -523,7 +514,7 @@ public sealed class LoggerFileTarget : LoggerTarget
 
         var logsBytes = _writingBuffer.GetBuffer();
 
-        var salt = GenerateSalt();
+        var salt = Path.GetRandomFileName();
 
         var archiveName = BuildDumpArchiveFileName(salt);
         var logsName = BuildDumpLogFileName(salt);
@@ -536,6 +527,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         ClearWritingBuffer();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private int GetLastArchiveIndex(DateTime date)
     {
         try
@@ -550,14 +542,13 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while getting last archive index");
-#endif
+            DebugEventLogger.Handle("Error while getting last archive index", exception);
 
             return 0;
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static int GetArchiveFileIndex(string filePath)
     {
         var filePathLength = filePath.Length;
@@ -620,6 +611,7 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     #region Buffers
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void TransferLogToWritingBuffer(in LogContext logContext, ILogInterpolator logInterpolator)
     {
         try
@@ -634,12 +626,11 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while writing to writing buffer");
-#endif
+            DebugEventLogger.Handle("Error while writing to writing buffer", exception);
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private bool TransferWritingBufferToLogsStream(bool retry = true)
     {
 	    if (_writingBuffer.Length is 0)
@@ -657,9 +648,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while writing to file stream from writing buffer");
-#endif
+            DebugEventLogger.Handle("Error while writing to file stream from writing buffer", exception);
 
             if (retry && SyncLogsFile())
             {
@@ -679,6 +668,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         return success;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void ClearWritingBuffer()
     {
         _writingBuffer.SetLength(0);
@@ -704,6 +694,7 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     #endregion
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static (string Name, DateTime Date) ParseFileDate(string path)
     {
         var fileName = Path.GetFileName(path.AsSpan());
@@ -731,6 +722,7 @@ public sealed class LoggerFileTarget : LoggerTarget
             : default;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool RemoveFile(string name)
     {
         try
@@ -741,9 +733,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
         catch (Exception exception)
         {
-#if DEBUG
-            DebugEventLogger.Handle(exception, "Error while removing file");
-#endif
+            DebugEventLogger.Handle("Error while removing file", exception);
 
             return false;
         }
@@ -758,6 +748,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
+    [MethodImpl(MethodImplOptions.NoInlining)]
     private static void CopyTo(StringBuilder builder, MemoryStream stream, char[] buffer, Encoding encoding)
     {
         var builderLength = builder.Length;
@@ -786,29 +777,5 @@ public sealed class LoggerFileTarget : LoggerTarget
 	    {
 		    stream.SetLength(position);
 	    }
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static string GenerateSalt()
-    {
-        return $"sa-{GenerateShortSalt()}-{GenerateShortSalt()}-lt";
-    }
-
-    private static string GenerateShortSalt()
-    {
-        var samples = new ReadOnlySpan<char>(SaltSamples);
-        var samplesLength = samples.Length;
-
-        var random = Random.Shared;
-
-        var saltLength = random.Next(2, 5);
-        Span<char> salt = stackalloc char[saltLength];
-
-        for (var i = 0; i < saltLength; i++)
-        {
-            salt[i] = samples[random.Next(samplesLength)];
-        }
-
-        return new string(salt);
     }
 }

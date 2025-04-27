@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace System.Logging.Debugs;
 
 public static class DebugEventLogger
@@ -6,6 +8,7 @@ public static class DebugEventLogger
     private static event DebugLogEventHandler? Handlers;
 #endif
 
+    [Conditional("DEBUG")]
     public static void AddHandler(DebugLogEventHandler handler)
     {
 #if DEBUG
@@ -13,6 +16,7 @@ public static class DebugEventLogger
 #endif
     }
 
+    [Conditional("DEBUG")]
     public static void RemoveHandler(DebugLogEventHandler handler)
     {
 #if DEBUG
@@ -20,6 +24,8 @@ public static class DebugEventLogger
 #endif
     }
 
+
+    [Conditional("DEBUG")]
     public static void Handle(string? message, Exception? exception = null)
     {
 #if DEBUG

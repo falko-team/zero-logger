@@ -66,9 +66,7 @@ public static partial class LoggerRuntime
             }
             catch (Exception exception)
             {
-#if DEBUG
                 DebugEventLogger.Handle("Error while cancelling logger context", exception);
-#endif
             }
 
             try
@@ -77,9 +75,7 @@ public static partial class LoggerRuntime
             }
             catch (Exception exception)
             {
-#if DEBUG
                 DebugEventLogger.Handle("Error while disposing logger context", exception);
-#endif
             }
 
             var targets = loggerContext.Targets;
@@ -117,9 +113,7 @@ public static partial class LoggerRuntime
         }
         catch (Exception exception)
         {
-#if DEBUG
             DebugEventLogger.Handle("Error while initializing logger target", exception);
-#endif
         }
     }
 
@@ -132,9 +126,7 @@ public static partial class LoggerRuntime
         }
         catch (Exception exception)
         {
-#if DEBUG
             DebugEventLogger.Handle("Error while disposing logger target", exception);
-#endif
         }
     }
 }
