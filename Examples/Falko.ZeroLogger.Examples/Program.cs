@@ -29,7 +29,7 @@ logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
 // good for string that is created before
 logger.Info(static () => "PI is {0}", "3.14");
 
-// good for string that don't created before
+// good for string that doesn't create before
 logger.Info(static () => "PI is {0}", static () => "3.14");
 
 // for errors
