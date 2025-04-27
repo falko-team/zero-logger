@@ -74,7 +74,6 @@ public ref struct ValueStringBuilder : IDisposable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string Build()
     {
-        Console.WriteLine(_position);
         return new string(_buffer[.._position]);
     }
 
