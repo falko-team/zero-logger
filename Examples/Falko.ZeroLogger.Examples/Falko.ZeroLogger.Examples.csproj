@@ -7,7 +7,7 @@
 
     <ItemGroup Label="Dependencies">
         <ProjectReference Include="..\..\Sources\Falko.ZeroLogger\Falko.ZeroLogger.csproj" />
-        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Interpolators.Simple\Falko.ZeroLogger.Interpolators.Simple.csproj" />
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Renderers.Simple\Falko.ZeroLogger.Renderers.Simple.csproj" />
         <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Targets.File\Falko.ZeroLogger.Targets.File.csproj" />
     </ItemGroup>
 </Project>

@@ -1,9 +1,9 @@
 using System.Logging.Logs;
-using System.Logging.Providers;
+using System.Logging.Renderers;
 
 namespace System.Logging.Contexts;
 
-public readonly ref struct LogContext(string source, LogLevel level, DateTimeOffset time, LogMessageProvider message)
+public readonly ref struct LogContext(string source, LogLevel level, DateTimeOffset time, ILogMessageRenderer message)
 {
     public string Source => source;
 
@@ -11,7 +11,7 @@ public readonly ref struct LogContext(string source, LogLevel level, DateTimeOff
 
     public DateTimeOffset Time => time;
 
-    public LogMessageProvider Message => message;
+    public ILogMessageRenderer Message => message;
 
     public Exception? Exception { get; init; }
 }

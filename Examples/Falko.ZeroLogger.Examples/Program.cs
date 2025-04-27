@@ -1,8 +1,8 @@
 ﻿using System.Logging.Builders;
 using System.Logging.Debugs;
 using System.Logging.Factories;
-using System.Logging.Interpolators;
 using System.Logging.Logs;
+using System.Logging.Renderers;
 using System.Logging.Runtimes;
 using System.Logging.Targets;
 
@@ -11,8 +11,8 @@ DebugEventLogger.AddHandler(static (message, exception) => Console
 
 LoggerRuntime.Initialize(new LoggerContextBuilder()
     .SetLevel(LogLevel.Trace)
-    .AddTarget(SimpleLogInterpolator.Instance, new LoggerFileTarget("a", "./Logs"))
-    .AddTarget(SimpleLogInterpolator.Instance, new LoggerFileTarget("b", "./Logs")));
+    .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("a", "./Logs"))
+    .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("b", "./Logs")));
 
 var logger = LoggerFactory.CreateLoggerOfType<Program>();
 
@@ -32,7 +32,14 @@ logger.Info(static () => "PI is {0}", "3.14");
 // good for string that doesn't create before
 logger.Info(static () => "PI is {0}", static () => "3.14");
 
-// for errors
-logger.Error(new Exception(), () => "Error handled");
+try
+{
+    throw new Exception();
+}
+catch (Exception exception)
+{
+    // for errors
+    logger.Error(exception, () => "Error handled");
+}
 
 LoggerRuntime.Dispose();
