@@ -3,7 +3,7 @@ using System.Logging.Renderers;
 
 namespace System.Logging.Contexts;
 
-public readonly ref struct LogContext(string source, LogLevel level, DateTimeOffset time, ILogMessageRenderer message)
+public readonly struct LogContext(string source, LogLevel level, DateTimeOffset time, ILogMessageRenderer message)
 {
     public string Source => source;
 
