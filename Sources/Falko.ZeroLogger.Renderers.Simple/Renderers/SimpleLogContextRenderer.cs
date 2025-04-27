@@ -1,11 +1,23 @@
 using System.Logging.Builders;
 using System.Logging.Contexts;
+using System.Logging.Logs;
+using System.Numerics;
 
 namespace System.Logging.Renderers;
 
 public sealed class SimpleLogContextRenderer : ILogContextRenderer
 {
     public static readonly SimpleLogContextRenderer Instance = new();
+
+    private static readonly string[] Levels =
+    [
+        "Trc",
+        "Dbg",
+        "Inf",
+        "Wrn",
+        "Err",
+        "Ftl"
+    ];
 
     private SimpleLogContextRenderer() { }
 
@@ -14,8 +26,8 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
         var dateText = logContext.Time.DateTime.ToShortTimeString();
         var dateBlockLength = dateText.Length + 3;
 
-        var levelText = logContext.Level.ToString();
-        var levelBlockLength = levelText.Length + 3;
+        var levelText = FormatLevel(logContext.Level);
+        const int levelBlockLength = 6;
 
         var sourceText = logContext.Source;
         var sourceBlockLength = sourceText.Length + 3;
@@ -125,5 +137,12 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
             return messageBuilder.ToString();
         }
+    }
+
+    public static string FormatLevel(LogLevel level)
+    {
+        var index = BitOperations.TrailingZeroCount((int)level);
+
+        return (uint)index < Levels.Length ? Levels[index] : "???";
     }
 }
