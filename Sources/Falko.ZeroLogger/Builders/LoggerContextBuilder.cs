@@ -17,18 +17,18 @@ public ref struct LoggerContextBuilder()
         return this;
     }
 
-    public LoggerContextBuilder AddTarget(ILogContextRenderer contextRenderer, LoggerTarget target)
+    public LoggerContextBuilder AddTarget(ILogContextRenderer renderer, LoggerTarget target)
     {
-        ArgumentNullException.ThrowIfNull(contextRenderer, nameof(contextRenderer));
+        ArgumentNullException.ThrowIfNull(renderer, nameof(renderer));
         ArgumentNullException.ThrowIfNull(target, nameof(target));
 
-        if (_targets.TryGetValue(contextRenderer, out var targets))
+        if (_targets.TryGetValue(renderer, out var targets))
         {
             targets.Add(target);
         }
         else
         {
-            _targets[contextRenderer] = [target];
+            _targets[renderer] = [target];
         }
 
         return this;
@@ -37,15 +37,15 @@ public ref struct LoggerContextBuilder()
     internal LoggerContext Build(CancellationToken cancellationToken)
     {
         var targets = new List<LoggerTarget>();
-        var interpolators = new List<LogContextRendererSpan>();
+        var renderers = new List<LogContextRendererSpan>();
 
         foreach (var interpolatorTargets in _targets)
         {
             targets.AddRange(interpolatorTargets.Value);
 
-            interpolators.Add(new LogContextRendererSpan(interpolatorTargets.Key, interpolatorTargets.Value.Count));
+            renderers.Add(new LogContextRendererSpan(interpolatorTargets.Key, interpolatorTargets.Value.Count));
         }
 
-        return new LoggerContext(_minimumLevel, targets.ToArray(), interpolators.ToArray(), cancellationToken);
+        return new LoggerContext(_minimumLevel, targets.ToArray(), renderers.ToArray(), cancellationToken);
     }
 }

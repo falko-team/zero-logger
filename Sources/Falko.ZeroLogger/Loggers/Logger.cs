@@ -3309,7 +3309,7 @@ public readonly partial struct Logger(string name)
     private static void PublishLog(in LoggerContext loggerContext, in LogContext logContext)
     {
         var targets = loggerContext.Targets;
-        var interpolators = loggerContext.Renderers;
+        var renderers = loggerContext.Renderers;
 
         var targetsLength = targets.Length;
 
@@ -3320,66 +3320,67 @@ public readonly partial struct Logger(string name)
 
             ref var targetsRef = ref MemoryMarshal.GetArrayDataReference(targets);
 
-            var interpolatorsLength = interpolators.Length;
+            var renderersLength = renderers.Length;
 
-            if (interpolatorsLength > 1)
+            if (renderersLength > 1)
             {
-                ref var interpolatorsRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Renderers);
+                ref var renderersRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Renderers);
 
                 var targetIndex = 0;
 
-                for (var interpolatorIndex = 0; interpolatorIndex < interpolatorsLength; interpolatorIndex++)
+                for (var rendererIndex = 0; rendererIndex < renderersLength; rendererIndex++)
                 {
-                    var logInterpolatorSpan = Unsafe.Add(ref interpolatorsRef, interpolatorIndex);
-                    var logInterpolatorSpanLength = logInterpolatorSpan.Count;
+                    var logRendererSpan = Unsafe.Add(ref renderersRef, rendererIndex);
+                    var logRendererSpanLength = logRendererSpan.Count;
 
-                    if (logInterpolatorSpanLength is 1)
+                    if (logRendererSpanLength is 1)
                     {
                         var target = Unsafe.Add(ref targetsRef, targetIndex);
 
                         ++targetIndex;
 
-                        PublishLog(target, logContext, logInterpolatorSpan.Renderer, cancellationToken);
+                        PublishLog(target, logContext, logRendererSpan.Renderer, cancellationToken);
 
                         continue;
                     }
 
-                    var logInterpolator = new PersistentLogContextRenderer(logInterpolatorSpan.Renderer);
+                    var logRenderer = new PersistentLogContextRenderer(logRendererSpan.Renderer);
 
-                    for (var i = 0; i < logInterpolatorSpanLength; i++)
+                    for (var i = 0; i < logRendererSpanLength; i++)
                     {
                         var target = Unsafe.Add(ref targetsRef, targetIndex);
 
                         ++targetIndex;
 
-                        PublishLog(target, logContext, logInterpolator, cancellationToken);
+                        PublishLog(target, logContext, logRenderer, cancellationToken);
                     }
                 }
             }
             else
             {
-                var logInterpolator = new PersistentLogContextRenderer(interpolators[0].Renderer);
+                var logRenderer = new PersistentLogContextRenderer(renderers[0].Renderer);
 
                 for (var targetIndex = 0; targetIndex < targetsLength; targetIndex++)
                 {
                     var target = Unsafe.Add(ref targetsRef, targetIndex);
 
-                    PublishLog(target, logContext, logInterpolator, cancellationToken);
+                    PublishLog(target, logContext, logRenderer, cancellationToken);
                 }
             }
         }
         else if (targetsLength is 1)
         {
-            PublishLog(targets[0], logContext, interpolators[0].Renderer, loggerContext.CancellationToken);
+            PublishLog(targets[0], logContext, renderers[0].Renderer, loggerContext.CancellationToken);
         }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void PublishLog(in LoggerTarget target, in LogContext logContext, ILogContextRenderer logContextRenderer, CancellationToken cancellationToken)
+    private static void PublishLog(in LoggerTarget target, in LogContext logContext, ILogContextRenderer logRenderer,
+        CancellationToken cancellationToken)
     {
         try
         {
-            target.Publish(logContext, logContextRenderer, cancellationToken);
+            target.Publish(logContext, logRenderer, cancellationToken);
         }
         catch (Exception exception)
         {
