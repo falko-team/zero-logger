@@ -12,12 +12,12 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
     private static readonly string[] LevelShortNames =
     [
-        "Trc",
-        "Dbg",
-        "Inf",
-        "Wrn",
-        "Err",
-        "Ftl"
+        "TRC",
+        "DBG",
+        "INF",
+        "WRN",
+        "ERR",
+        "FTL"
     ];
 
     private static readonly string NewLine = Environment.NewLine;
