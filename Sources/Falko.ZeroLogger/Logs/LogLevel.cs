@@ -1,5 +1,6 @@
 namespace System.Logging.Logs;
 
+[Flags]
 public enum LogLevel
 {
     Trace = 1 << 0,

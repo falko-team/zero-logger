@@ -17,7 +17,7 @@ public static partial class LoggerRuntime
 
     internal static LoggerContext Context = DefaultContext;
 
-    public static LogLevel MinimumLevel => Context.MinimumLevel;
+    public static LogLevel Level => Context.Level;
 
     public static void Initialize(LoggerContextBuilder loggerBuilder, CancellationToken cancellationToken)
     {

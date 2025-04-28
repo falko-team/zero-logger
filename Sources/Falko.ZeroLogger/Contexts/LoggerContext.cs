@@ -5,7 +5,7 @@ namespace System.Logging.Contexts;
 
 internal readonly struct LoggerContext
 {
-    public readonly LogLevel MinimumLevel;
+    public readonly LogLevel Level;
 
     public readonly LoggerTarget[] Targets;
 
@@ -13,9 +13,9 @@ internal readonly struct LoggerContext
 
     public readonly CancellationToken CancellationToken;
 
-    internal LoggerContext(LogLevel minimumLevel, LoggerTarget[] targets, LogContextRendererSpan[] renderers, CancellationToken cancellationToken)
+    internal LoggerContext(LogLevel level, LoggerTarget[] targets, LogContextRendererSpan[] renderers, CancellationToken cancellationToken)
     {
-        MinimumLevel = minimumLevel;
+        Level = level;
         Targets = targets;
         Renderers = renderers;
         CancellationToken = cancellationToken;
