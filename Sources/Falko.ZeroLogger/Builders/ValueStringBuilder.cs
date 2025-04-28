@@ -51,9 +51,9 @@ public ref struct ValueStringBuilder : IDisposable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(char symbol, int repeat)
     {
-        for (var i = 0; i < repeat; i++)
+        for (var iteration = 0; iteration < repeat; iteration++)
         {
-            _buffer[_position + i] = symbol;
+            _buffer[_position + iteration] = symbol;
         }
 
         _position += repeat;
