@@ -21,7 +21,7 @@ public ref struct ValueStringBuilder : IDisposable
     public ValueStringBuilder(int capacity)
     {
         _debt = ArrayPool<char>.Shared.Rent(capacity);
-        _buffer = _debt.AsSpan(0);
+        _buffer = _debt.AsSpan();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -46,6 +46,17 @@ public ref struct ValueStringBuilder : IDisposable
         symbols.CopyTo(_buffer[_position..]);
 
         _position += length;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Append(char symbol, int repeat)
+    {
+        for (var i = 0; i < repeat; i++)
+        {
+            _buffer[_position + i] = symbol;
+        }
+
+        _position += repeat;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
