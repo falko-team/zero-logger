@@ -12,7 +12,6 @@ internal static class LogMessageArgumentsInterpolationUtils
     private const char ArgumentOpenBrace = '{';
     private const char ArgumentCloseBrace = '}';
 
-    private const int DefaultMessageBuilderBufferCapacity = 256;
     private const int DefaultMessageArgumentLength = 8;
 
     [MethodImpl(MethodImplOptions.NoInlining)]
@@ -33,7 +32,7 @@ internal static class LogMessageArgumentsInterpolationUtils
 
         var messageLength = message.Length + argumentSpan.Length - argumentSymbolsCount;
 
-        using scoped var messageBuilder = messageLength > DefaultMessageBuilderBufferCapacity
+        using scoped var messageBuilder = messageLength > ValueStringBuilder.MaximumSafeStackBufferSize
             ? new ValueStringBuilder(messageLength)
             : new ValueStringBuilder(stackalloc char[messageLength]);
 
@@ -167,9 +166,9 @@ internal static class LogMessageArgumentsInterpolationUtils
     {
         var messageLength = message.Length * argumentsCount * DefaultMessageArgumentLength;
 
-        using scoped var messageBuilder = messageLength > DefaultMessageBuilderBufferCapacity
+        using scoped var messageBuilder = messageLength > ValueStringBuilder.MaximumSafeStackBufferSize
             ? new ValueStringBuilder(messageLength)
-            : new ValueStringBuilder(stackalloc char[messageLength]);
+            : new ValueStringBuilder(stackalloc char[ValueStringBuilder.MaximumSafeStackBufferSize]);
 
         scoped var messageSpan = message.AsSpan();
 
@@ -204,9 +203,10 @@ internal static class LogMessageArgumentsInterpolationUtils
                 break;
             }
 
-            var argument = Unsafe.Add(ref argumentsRef, argumentIndex);
+            var argument = Unsafe.Add(ref argumentsRef, argumentIndex) ?? NullString;
 
-            messageBuilder.Append(argument ?? NullString);
+            messageBuilder.Ensure(argument.Length);
+            messageBuilder.Append(argument);
 
             messageIndex = argumentCloseIndex + 1;
         }

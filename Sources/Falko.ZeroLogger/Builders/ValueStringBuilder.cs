@@ -5,23 +5,46 @@ namespace System.Logging.Builders;
 
 public ref struct ValueStringBuilder : IDisposable
 {
-    private readonly char[]? _debt;
+    public const int MaximumSafeStackBufferSize = 256;
 
-    private readonly Span<char> _buffer;
+    private char[]? _array;
+
+    private Span<char> _span;
 
     private int _position;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public ValueStringBuilder(Span<char> buffer)
+    public ValueStringBuilder(Span<char> span)
     {
-        _buffer = buffer;
+        _span = span;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ValueStringBuilder(int capacity)
     {
-        _debt = ArrayPool<char>.Shared.Rent(capacity);
-        _buffer = _debt.AsSpan();
+        _array = ArrayPool<char>.Shared.Rent(capacity);
+        _span = _array.AsSpan();
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public void Ensure(int length)
+    {
+        var newLength = length + _position;
+
+        if (newLength <= _span.Length) return;
+
+        var newArray = ArrayPool<char>.Shared.Rent(newLength);
+        var newSpan = newArray.AsSpan();
+
+        _span[.._position].CopyTo(newSpan);
+
+        if (_array is not null)
+        {
+            ArrayPool<char>.Shared.Return(_array);
+        }
+
+        _array = newArray;
+        _span = newSpan;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,7 +54,7 @@ public ref struct ValueStringBuilder : IDisposable
 
         if (length is 0) return;
 
-        symbols.CopyTo(_buffer[_position..]);
+        symbols.CopyTo(_span[_position..]);
 
         _position += length;
     }
@@ -43,7 +66,7 @@ public ref struct ValueStringBuilder : IDisposable
 
         if (length is 0) return;
 
-        symbols.CopyTo(_buffer[_position..]);
+        symbols.CopyTo(_span[_position..]);
 
         _position += length;
     }
@@ -53,7 +76,7 @@ public ref struct ValueStringBuilder : IDisposable
     {
         for (var iteration = 0; iteration < repeat; iteration++)
         {
-            _buffer[_position + iteration] = symbol;
+            _span[_position + iteration] = symbol;
         }
 
         _position += repeat;
@@ -62,19 +85,19 @@ public ref struct ValueStringBuilder : IDisposable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(char symbol)
     {
-        _buffer[_position] = symbol;
+        _span[_position] = symbol;
 
         ++_position;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => new(_buffer[.._position]);
+    public override string ToString() => new(_span[.._position]);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Dispose()
     {
-        if (_debt is null) return;
+        if (_array is null) return;
 
-        ArrayPool<char>.Shared.Return(_debt);
+        ArrayPool<char>.Shared.Return(_array);
     }
 }
