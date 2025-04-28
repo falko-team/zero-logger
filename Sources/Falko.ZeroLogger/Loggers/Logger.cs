@@ -3330,23 +3330,23 @@ public readonly partial struct Logger(string name)
 
                 for (var rendererIndex = 0; rendererIndex < renderersLength; rendererIndex++)
                 {
-                    var logRendererSpan = Unsafe.Add(ref renderersRef, rendererIndex);
-                    var logRendererSpanLength = logRendererSpan.Count;
+                    var renderersSpan = Unsafe.Add(ref renderersRef, rendererIndex);
+                    var spanRenderers = renderersSpan.Count;
 
-                    if (logRendererSpanLength is 1)
+                    if (spanRenderers is 1)
                     {
                         var target = Unsafe.Add(ref targetsRef, targetIndex);
 
                         ++targetIndex;
 
-                        PublishLog(target, logContext, logRendererSpan.Renderer, cancellationToken);
+                        PublishLog(target, logContext, renderersSpan.Renderer, cancellationToken);
 
                         continue;
                     }
 
-                    var logRenderer = new PersistentLogContextRenderer(logRendererSpan.Renderer);
+                    var logRenderer = new PersistentLogContextRenderer(renderersSpan.Renderer);
 
-                    for (var i = 0; i < logRendererSpanLength; i++)
+                    for (var logRendererIndex = 0; logRendererIndex < spanRenderers; logRendererIndex++)
                     {
                         var target = Unsafe.Add(ref targetsRef, targetIndex);
 

@@ -21,9 +21,11 @@ internal sealed class ManyInstanceArgumentsMessageLogMessageRenderer
         scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
         scoped ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentObjects);
 
-        for (var i = 0; i < argumentObjectsLength; i++)
+        for (var argumentObjectIndex = 0; argumentObjectIndex < argumentObjectsLength; argumentObjectIndex++)
         {
-            Unsafe.Add(ref argumentsRef, i) = Unsafe.Add(ref argumentFactoriesRef, i)?.ToString();
+            var argumentObject = Unsafe.Add(ref argumentFactoriesRef, argumentObjectIndex)?.ToString();
+
+            Unsafe.Add(ref argumentsRef, argumentObjectIndex) = argumentObject;
         }
 
         var interpolatedMessage = LogMessageArgumentsInterpolationUtils.Interpolate(message,

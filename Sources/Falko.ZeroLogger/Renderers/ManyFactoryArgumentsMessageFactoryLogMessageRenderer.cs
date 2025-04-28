@@ -22,9 +22,11 @@ internal sealed class ManyFactoryArgumentsMessageFactoryLogMessageRenderer
         scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
         scoped ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentFactories);
 
-        for (var i = 0; i < argumentFactoriesLength; i++)
+        for (var argumentFactoryIndex = 0; argumentFactoryIndex < argumentFactoriesLength; argumentFactoryIndex++)
         {
-            Unsafe.Add(ref argumentsRef, i) = Unsafe.Add(ref argumentFactoriesRef, i)();
+            var argumentFactory = Unsafe.Add(ref argumentFactoriesRef, argumentFactoryIndex)();
+
+            Unsafe.Add(ref argumentsRef, argumentFactoryIndex) = argumentFactory;
         }
 
         var interpolatedMessage = LogMessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
