@@ -3391,6 +3391,6 @@ public readonly partial struct Logger(string name)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool CantLog(in LoggerContext loggerContext, LogLevel level)
     {
-        return loggerContext.MinimumLevel > level;
+        return (loggerContext.Level & level) is 0;
     }
 }

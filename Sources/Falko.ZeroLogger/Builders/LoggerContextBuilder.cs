@@ -9,11 +9,11 @@ public ref struct LoggerContextBuilder()
 {
     private readonly Dictionary<ILogContextRenderer, List<LoggerTarget>> _targets = new();
 
-    private LogLevel _minimumLevel = LogLevel.Trace;
+    private LogLevel _level = LogLevels.TraceAndAbove;
 
-    public LoggerContextBuilder SetLevel(LogLevel minimumLevel)
+    public LoggerContextBuilder SetLevel(LogLevel level)
     {
-        _minimumLevel = minimumLevel;
+        _level = level;
         return this;
     }
 
@@ -46,6 +46,6 @@ public ref struct LoggerContextBuilder()
             renderers.Add(new LogContextRendererSpan(interpolatorTargets.Key, interpolatorTargets.Value.Count));
         }
 
-        return new LoggerContext(_minimumLevel, targets.ToArray(), renderers.ToArray(), cancellationToken);
+        return new LoggerContext(_level, targets.ToArray(), renderers.ToArray(), cancellationToken);
     }
 }

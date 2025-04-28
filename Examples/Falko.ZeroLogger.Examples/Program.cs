@@ -10,7 +10,7 @@ DebugEventLogger.AddHandler(static (message, exception) => Console
     .WriteLine($"Logger Internal Event: {message} {exception}"));
 
 LoggerRuntime.Initialize(new LoggerContextBuilder()
-    .SetLevel(LogLevel.Trace)
+    .SetLevel(LogLevels.TraceAndAbove)
     .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("a", "./Logs"))
     .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("b", "./Logs")));
 
