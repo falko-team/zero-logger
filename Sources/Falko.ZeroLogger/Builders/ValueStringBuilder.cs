@@ -55,7 +55,6 @@ public ref struct ValueStringBuilder : IDisposable
         if (length is 0) return;
 
         symbols.CopyTo(_span[_position..]);
-
         _position += length;
     }
 
@@ -67,7 +66,6 @@ public ref struct ValueStringBuilder : IDisposable
         if (length is 0) return;
 
         symbols.CopyTo(_span[_position..]);
-
         _position += length;
     }
 
@@ -82,7 +80,6 @@ public ref struct ValueStringBuilder : IDisposable
     public void Append(char symbol)
     {
         _span[_position] = symbol;
-
         ++_position;
     }
 
