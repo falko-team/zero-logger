@@ -28,7 +28,7 @@ internal sealed class ManyInstanceArgumentsMessageLogMessageRenderer
             Unsafe.Add(ref argumentsRef, argumentObjectIndex) = argumentObject;
         }
 
-        var interpolatedMessage = LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        var interpolatedMessage = MessageArgumentsInterpolationUtils.Interpolate(message,
             ref argumentsRef, argumentObjectsLength);
 
         arrays.Return(arguments);

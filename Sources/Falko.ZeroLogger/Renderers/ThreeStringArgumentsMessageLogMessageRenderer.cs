@@ -12,7 +12,7 @@ internal sealed class ThreeStringArgumentsMessageLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             argument1,
             argument2,
             argument3);

@@ -11,7 +11,7 @@ internal sealed class SingleStringArgumentMessageFactoryLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
+        return MessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
             argument);
     }
 }

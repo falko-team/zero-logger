@@ -12,7 +12,7 @@ internal sealed class ManyStringArgumentsMessageFactoryLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
+        return MessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
             ref MemoryMarshal.GetArrayDataReference(arguments), arguments.Length);
     }
 }
