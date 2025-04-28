@@ -10,7 +10,7 @@ internal sealed class SingleStringArgumentMessageLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             argument);
     }
 }

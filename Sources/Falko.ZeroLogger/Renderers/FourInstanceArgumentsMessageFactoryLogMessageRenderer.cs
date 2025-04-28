@@ -14,7 +14,7 @@ internal sealed class FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, 
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
+        return MessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
             argument1?.ToString(),
             argument2?.ToString(),
             argument3?.ToString(),

@@ -11,7 +11,7 @@ internal sealed class ManyStringArgumentsMessageLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             ref MemoryMarshal.GetArrayDataReference(arguments), arguments.Length);
     }
 }

@@ -12,7 +12,7 @@ internal sealed class TwoArgumentsMessageLogMessageRenderer<T1, T2>
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             argument1.Factory(argument1.Value),
             argument2.Factory(argument2.Value));
     }

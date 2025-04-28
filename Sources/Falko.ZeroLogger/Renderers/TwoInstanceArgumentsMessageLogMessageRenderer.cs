@@ -11,7 +11,7 @@ internal sealed class TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             argument1?.ToString(),
             argument2?.ToString());
     }

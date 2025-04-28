@@ -13,7 +13,7 @@ internal sealed class ThreeFactoryArgumentsMessageLogMessageRenderer
 {
     protected override string RenderCore()
     {
-        return LogMessageArgumentsInterpolationUtils.Interpolate(message,
+        return MessageArgumentsInterpolationUtils.Interpolate(message,
             argumentFactory1(),
             argumentFactory2(),
             argumentFactory3());

@@ -29,7 +29,7 @@ internal sealed class ManyFactoryArgumentsMessageFactoryLogMessageRenderer
             Unsafe.Add(ref argumentsRef, argumentFactoryIndex) = argumentFactory;
         }
 
-        var interpolatedMessage = LogMessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
+        var interpolatedMessage = MessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
             ref argumentsRef, argumentFactoriesLength);
 
         arrays.Return(arguments);

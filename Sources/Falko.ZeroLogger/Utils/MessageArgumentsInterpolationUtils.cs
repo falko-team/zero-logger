@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace System.Logging.Utils;
 
-internal static class LogMessageArgumentsInterpolationUtils
+internal static class MessageArgumentsInterpolationUtils
 {
     private const string NullString = "null";
 
