@@ -3318,13 +3318,13 @@ public readonly partial struct Logger(string name)
         {
             var cancellationToken = loggerContext.CancellationToken;
 
-            ref var targetsRef = ref MemoryMarshal.GetArrayDataReference(targets);
+            scoped ref var targetsRef = ref MemoryMarshal.GetArrayDataReference(targets);
 
             var renderersLength = renderers.Length;
 
             if (renderersLength > 1)
             {
-                ref var renderersRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Renderers);
+                scoped ref var renderersRef = ref MemoryMarshal.GetArrayDataReference(loggerContext.Renderers);
 
                 var targetIndex = 0;
 

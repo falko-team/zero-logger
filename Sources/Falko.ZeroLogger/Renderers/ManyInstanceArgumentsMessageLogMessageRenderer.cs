@@ -18,8 +18,8 @@ internal sealed class ManyInstanceArgumentsMessageLogMessageRenderer
         var arrays = ArrayPool<string?>.Shared;
         var arguments = arrays.Rent(argumentObjectsLength);
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
-        ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentObjects);
+        scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+        scoped ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentObjects);
 
         for (var i = 0; i < argumentObjectsLength; i++)
         {
