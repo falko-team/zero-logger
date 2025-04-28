@@ -19,8 +19,8 @@ internal sealed class ManyFactoryArgumentsMessageFactoryLogMessageRenderer
         var arrays = ArrayPool<string?>.Shared;
         var arguments = arrays.Rent(argumentFactoriesLength);
 
-        ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
-        ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentFactories);
+        scoped ref var argumentsRef = ref MemoryMarshal.GetArrayDataReference(arguments);
+        scoped ref var argumentFactoriesRef = ref MemoryMarshal.GetArrayDataReference(argumentFactories);
 
         for (var i = 0; i < argumentFactoriesLength; i++)
         {

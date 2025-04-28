@@ -155,7 +155,7 @@ internal static class LogMessageArgumentsInterpolationUtils
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string Interpolate(string? message, ref string? arguments, int count)
+    public static string Interpolate(string? message, scoped ref string? arguments, int count)
     {
         if (message is null) return string.Empty;
 
