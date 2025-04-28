@@ -62,7 +62,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
         if (exception is null)
         {
-            scoped var messageBuilder = messageLength > 256
+            scoped var messageBuilder = messageLength > ValueStringBuilder.MaximumSafeStackBufferSize
                 ? new ValueStringBuilder(messageLength)
                 : new ValueStringBuilder(stackalloc char[messageLength]);
 
@@ -94,7 +94,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
                 + exceptionStackTraceBlockLength
                 + NewLineLength;
 
-            scoped var messageBuilder = messageLength > 256
+            scoped var messageBuilder = messageLength > ValueStringBuilder.MaximumSafeStackBufferSize
                 ? new ValueStringBuilder(messageLength)
                 : new ValueStringBuilder(stackalloc char[messageLength]);
 
