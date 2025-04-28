@@ -91,8 +91,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
             messageLength = messageLength
                 + GetExceptionBlockLength(ExceptionTypeBlockNameLength, exceptionTypeName)
                 + GetExceptionBlockLength(ExceptionMessageBlockNameLength, exceptionMessage)
-                + exceptionStackTraceBlockLength
-                + NewLineLength;
+                + exceptionStackTraceBlockLength;
 
             scoped var messageBuilder = messageLength > ValueStringBuilder.MaximumSafeStackBufferSize
                 ? new ValueStringBuilder(messageLength)
@@ -109,8 +108,6 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
                 {
                     RenderExceptionBlock(ref messageBuilder, ExceptionStackTraceBlockName, exceptionStackTrace!);
                 }
-
-                messageBuilder.Append(NewLine);
 
                 return messageBuilder.ToString();
             }
