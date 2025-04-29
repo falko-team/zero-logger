@@ -106,7 +106,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         }
     }
 
-    public override void Publish(in LogContext logContext, ILogContextRenderer logContextRenderer, CancellationToken cancellationToken)
+    public override void Publish(in LogContext logContext, ILogContextRenderer renderer, CancellationToken cancellationToken)
     {
         lock (_locker)
         {
@@ -119,7 +119,7 @@ public sealed class LoggerFileTarget : LoggerTarget
                 SplitLogsToArchive();
             }
 
-            TransferLogToWritingBuffer(logContext, logContextRenderer);
+            TransferLogToWritingBuffer(logContext, renderer);
 
             if (IsWritingBufferWritingThresholdReached(logContext.Time.UtcDateTime) is false)
             {
