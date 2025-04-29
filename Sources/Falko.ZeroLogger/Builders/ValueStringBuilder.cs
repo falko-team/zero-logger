@@ -84,6 +84,14 @@ public ref struct ValueStringBuilder : IDisposable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Append<T>(int length, T state, SpanAction<char, T> action)
+    {
+        action(_span.Slice(_position, length), state);
+
+        _position += length;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override string ToString()
     {
 #if NET9_0_OR_GREATER
