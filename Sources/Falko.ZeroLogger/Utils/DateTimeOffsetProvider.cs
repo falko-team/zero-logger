@@ -7,23 +7,30 @@ public static class DateTimeOffsetProvider
 {
     private static readonly Stopwatch Stopwatch = Stopwatch.StartNew();
 
-    private static DateTimeOffset _lastTime = DateTimeOffset.Now;
+    private static DateTimeOffset _cachedTime = DateTimeOffset.Now;
 
-    private static long _lastTick;
+    private static long _lastUpdateTicksTime = Stopwatch.ElapsedTicks;
+
+    private const long CachedTimeUpdateIntervalTicks = 10 * 1000 * 1000; // 10ms
 
     public static DateTimeOffset Now
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
-            var currentTick = Stopwatch.ElapsedMilliseconds;
+            var currentTimestamp = Stopwatch.ElapsedTicks;
 
-            if (currentTick == _lastTick) return _lastTime;
+            var currentTimestampDelta = currentTimestamp - _lastUpdateTicksTime;
 
-            _lastTime = DateTimeOffset.Now;
-            _lastTick = currentTick;
+            if (currentTimestampDelta < CachedTimeUpdateIntervalTicks)
+            {
+                return _cachedTime.AddTicks(currentTimestampDelta);
+            }
 
-            return _lastTime;
+            _cachedTime = DateTimeOffset.Now;
+            _lastUpdateTicksTime = currentTimestamp;
+
+            return _cachedTime;
         }
     }
 }
