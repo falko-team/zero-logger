@@ -11,7 +11,7 @@ DebugEventLogger.AddHandler(static (message, exception) => Console
 
 LoggerRuntime.Initialize(new LoggerContextBuilder()
     .SetLevel(LogLevels.TraceAndAbove)
-    .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("a", "./Logs"))
+    .AddTarget(SimpleLogContextRenderer.Instance, LoggerConsoleTarget.Instance)
     .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("b", "./Logs")));
 
 var logger = LoggerFactory.CreateLoggerOfType<Program>();
