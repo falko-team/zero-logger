@@ -43,7 +43,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
     [MethodImpl(MethodImplOptions.NoInlining)]
     public string Render(in LogContext logContext)
     {
-        var dateText = logContext.Time.DateTime.ToShortTimeString();
+        var dateText = FormatTime(logContext.Time);
 
         var levelText = FormatLevel(logContext.Level);
         const int levelTextBlockLength = 3 + BlockMinimumLength;
@@ -172,5 +172,31 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
         var index = BitOperations.TrailingZeroCount((int)level);
 
         return LevelShortNames[index];
+    }
+
+    public static string FormatTime(DateTimeOffset time)
+    {
+        return string.Create(12, time.TimeOfDay, static (buffer, time) =>
+        {
+            var hours = time.Hours;
+            buffer[0] = (char)('0' + hours / 10);
+            buffer[1] = (char)('0' + hours - hours / 10 * 10);
+            buffer[2] = ':';
+
+            var minutes = time.Minutes;
+            buffer[3] = (char)('0' + minutes / 10);
+            buffer[4] = (char)('0' + minutes - minutes / 10 * 10);
+            buffer[5] = ':';
+
+            var seconds = time.Seconds;
+            buffer[6] = (char)('0' + seconds / 10);
+            buffer[7] = (char)('0' + seconds - seconds / 10 * 10);
+            buffer[8] = '.';
+
+            var milliseconds = time.Milliseconds;
+            buffer[9]  = (char)('0' + milliseconds / 100);
+            buffer[10] = (char)('0' + milliseconds - milliseconds / 100 * 100);
+            buffer[11] = (char)('0' + milliseconds - milliseconds / 10 * 10);
+        });
     }
 }
