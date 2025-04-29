@@ -1,10 +1,52 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Logging.Utils;
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 
 BenchmarkRunner.Run<LogIgnoringBenchmark>();
-BenchmarkRunner.Run<LogRenderingBenchmark>();
-BenchmarkRunner.Run<LogRenderingDosBenchmark>();
+BenchmarkRunner.Run<SingleArgumentLogRenderingBenchmark>();
+BenchmarkRunner.Run<TwoArgumentsLogRenderingBenchmark>();
+BenchmarkRunner.Run<DateTimeOffsetBenchmark>();
 
+[MemoryDiagnoser]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
+[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
+public class DateTimeOffsetBenchmark
+{
+    private const int Iterations = 100;
+
+    [GlobalSetup]
+    public void Setup()
+    {
+        LoggerConfigurer.Configure();
+    }
+
+    [Benchmark(Baseline = true)]
+    public void ProvidedTIme()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            _ = DateTimeOffsetProvider.Now;
+        }
+    }
+
+    [Benchmark]
+    public void CreatedTime()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            _ = DateTimeOffset.Now;
+        }
+    }
+}
+
+[RPlotExporter]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
+[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
 public class LogIgnoringBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
@@ -40,11 +82,17 @@ public class LogIgnoringBenchmark
     }
 }
 
+[RPlotExporter]
 [MemoryDiagnoser]
-public class LogRenderingBenchmark
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
+[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
+public class SingleArgumentLogRenderingBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
-        .CreateLoggerOfType<LogRenderingBenchmark>();
+        .CreateLoggerOfType<SingleArgumentLogRenderingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
         .GetCurrentClassLogger();
@@ -76,11 +124,17 @@ public class LogRenderingBenchmark
     }
 }
 
+[RPlotExporter]
 [MemoryDiagnoser]
-public class LogRenderingDosBenchmark
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
+[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
+public class TwoArgumentsLogRenderingBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
-        .CreateLoggerOfType<LogRenderingDosBenchmark>();
+        .CreateLoggerOfType<TwoArgumentsLogRenderingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
         .GetCurrentClassLogger();

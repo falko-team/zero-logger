@@ -5,6 +5,7 @@ using System.Logging.Logs;
 using System.Logging.Renderers;
 using System.Logging.Runtimes;
 using System.Logging.Targets;
+using System.Logging.Utils;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -25,7 +26,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleMessageLogMessageRenderer(message);
 
@@ -41,7 +42,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleMessageLogMessageRenderer(message);
 
@@ -58,7 +59,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
@@ -72,7 +73,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
@@ -96,7 +97,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -113,7 +114,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -131,7 +132,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -146,7 +147,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -170,7 +171,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -187,7 +188,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -205,7 +206,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -220,7 +221,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -244,7 +245,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -261,7 +262,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -279,7 +280,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -294,7 +295,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -318,7 +319,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -335,7 +336,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -353,7 +354,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -368,7 +369,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -392,7 +393,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -409,7 +410,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -427,7 +428,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -442,7 +443,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -466,7 +467,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -483,7 +484,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -501,7 +502,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -516,7 +517,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -540,7 +541,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -557,7 +558,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -575,7 +576,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -590,7 +591,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -614,7 +615,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -631,7 +632,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -649,7 +650,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -664,7 +665,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -688,7 +689,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -705,7 +706,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -723,7 +724,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -738,7 +739,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -762,7 +763,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -779,7 +780,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -797,7 +798,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -812,7 +813,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -836,7 +837,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -853,7 +854,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -871,7 +872,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -886,7 +887,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -910,7 +911,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -927,7 +928,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -945,7 +946,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -960,7 +961,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -984,7 +985,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1001,7 +1002,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1019,7 +1020,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1034,7 +1035,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1058,7 +1059,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1075,7 +1076,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1093,7 +1094,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1108,7 +1109,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1132,7 +1133,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1149,7 +1150,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1167,7 +1168,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1182,7 +1183,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1206,7 +1207,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1223,7 +1224,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1241,7 +1242,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1256,7 +1257,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1280,7 +1281,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1297,7 +1298,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1315,7 +1316,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1330,7 +1331,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1354,7 +1355,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1371,7 +1372,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1389,7 +1390,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1404,7 +1405,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1428,7 +1429,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1445,7 +1446,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1463,7 +1464,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1478,7 +1479,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1502,7 +1503,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1519,7 +1520,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1537,7 +1538,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1552,7 +1553,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1576,7 +1577,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1593,7 +1594,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
@@ -1611,7 +1612,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1626,7 +1627,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
@@ -1650,7 +1651,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
@@ -1668,7 +1669,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
@@ -1687,7 +1688,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
@@ -1703,7 +1704,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
@@ -1729,7 +1730,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1749,7 +1750,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1770,7 +1771,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1788,7 +1789,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1816,7 +1817,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1838,7 +1839,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1861,7 +1862,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1881,7 +1882,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1911,7 +1912,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1935,7 +1936,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1960,7 +1961,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1982,7 +1983,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -2010,7 +2011,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
@@ -2028,7 +2029,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
@@ -2047,7 +2048,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
@@ -2063,7 +2064,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
@@ -2088,7 +2089,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
@@ -2105,7 +2106,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
@@ -2123,7 +2124,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
@@ -2138,7 +2139,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
@@ -2160,7 +2161,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
@@ -2180,7 +2181,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
@@ -2201,7 +2202,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
@@ -2219,7 +2220,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
@@ -2247,7 +2248,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
@@ -2269,7 +2270,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
@@ -2292,7 +2293,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
@@ -2312,7 +2313,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
@@ -2342,7 +2343,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2366,7 +2367,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2391,7 +2392,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2413,7 +2414,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2441,7 +2442,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
@@ -2459,7 +2460,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
@@ -2478,7 +2479,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
@@ -2494,7 +2495,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
@@ -2519,7 +2520,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
@@ -2537,7 +2538,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
@@ -2556,7 +2557,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
@@ -2572,7 +2573,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
@@ -2598,7 +2599,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
@@ -2618,7 +2619,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
@@ -2639,7 +2640,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
@@ -2657,7 +2658,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
@@ -2685,7 +2686,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
@@ -2707,7 +2708,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
@@ -2730,7 +2731,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
@@ -2750,7 +2751,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
@@ -2780,7 +2781,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2804,7 +2805,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2829,7 +2830,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2851,7 +2852,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2879,7 +2880,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
@@ -2897,7 +2898,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
@@ -2916,7 +2917,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
@@ -2932,7 +2933,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
@@ -2958,7 +2959,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -2978,7 +2979,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -2999,7 +3000,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3017,7 +3018,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3045,7 +3046,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -3067,7 +3068,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -3090,7 +3091,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3110,7 +3111,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3140,7 +3141,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -3164,7 +3165,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -3189,7 +3190,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3211,7 +3212,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -3239,7 +3240,7 @@ public readonly partial struct Logger(string name)
 
         if (message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
@@ -3257,7 +3258,7 @@ public readonly partial struct Logger(string name)
 
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
@@ -3276,7 +3277,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);
@@ -3292,7 +3293,7 @@ public readonly partial struct Logger(string name)
 
         if (CantLog(loggerContext, level)) return;
 
-        var time = DateTimeOffset.Now;
+        var time = DateTimeOffsetProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);

@@ -3,7 +3,6 @@
 
     <PropertyGroup Label="Assembly">
         <OutputType>exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <PropertyGroup Label="Language">
