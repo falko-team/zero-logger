@@ -84,7 +84,10 @@ public ref struct ValueStringBuilder : IDisposable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override string ToString() => new(_span[.._position]);
+    public override string ToString()
+    {
+        return string.Create(_position, _span[.._position], static (span, chars) => chars.CopyTo(span));
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Dispose()
