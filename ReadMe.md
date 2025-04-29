@@ -6,7 +6,7 @@ High-Performance Static Structured Logger with Minimal Allocations.
 
 ```C#
 LoggerRuntime.Initialize(new LoggerContextBuilder()
-    .SetLevel(LogLevel.Info)
+    .SetLevel(LogLevels.InfoAndAbove)
     .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("program", "./Logs")));
 
 var logger = LoggerFactory.CreateLoggerOfType<Program>();
