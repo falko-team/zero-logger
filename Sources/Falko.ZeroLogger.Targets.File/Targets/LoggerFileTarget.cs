@@ -20,7 +20,11 @@ public sealed class LoggerFileTarget : LoggerTarget
 
     private static readonly string ApplicationDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-    private readonly Lock _locker = new();
+#if NET9_0_OR_GREATER
+    private static readonly Lock Locker = new();
+#else
+    private static readonly object Locker = new();
+#endif
 
     private readonly string _directoryPath;
 
