@@ -9,7 +9,11 @@ namespace System.Logging.Runtimes;
 
 public static partial class LoggerRuntime
 {
+#if NET9_0_OR_GREATER
     private static readonly Lock Locker = new();
+#else
+    private static readonly object Locker = new();
+#endif
 
     private static readonly LoggerContext DefaultContext = new(LogLevel.Trace, [], [], new CancellationToken(true));
 
