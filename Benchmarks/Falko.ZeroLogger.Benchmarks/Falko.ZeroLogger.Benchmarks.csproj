@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../Examples.Build.props" />
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger.Renderers.Simple\Falko.ZeroLogger.Renderers.Simple.csproj" />
+        <ProjectReference Include="..\..\Sources\Falko.ZeroLogger\Falko.ZeroLogger.csproj" />
+
+        <PackageReference Include="BenchmarkDotNet" />
+
+        <PackageReference Include="NLog" />
+    </ItemGroup>
+</Project>
