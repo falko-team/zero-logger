@@ -2,7 +2,6 @@
     <Import Project="Common.Build.props" />
 
     <PropertyGroup Label="Assembly">
-        <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
         <IsPackable>true</IsPackable>
         <DebugType>portable</DebugType>
         <IncludeSymbols>true</IncludeSymbols>
