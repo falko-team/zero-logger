@@ -31,9 +31,9 @@ jobs:
           if [[ -d "$dir" ]]; then
             cd "$dir"
             if [[ ${{ github.event_name }} == "release" ]]; then
-              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true
+              dotnet pack -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true
             else
-              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true
+              dotnet pack -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true
             fi
             cd -
           fi
