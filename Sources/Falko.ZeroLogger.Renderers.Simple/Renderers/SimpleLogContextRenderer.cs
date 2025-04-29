@@ -34,7 +34,15 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
     private static readonly string ExceptionStackTraceBlockName = $"Trace:{NewLine}";
     private static readonly int ExceptionStackTraceBlockNameLength = ExceptionStackTraceBlockName.Length;
 
+    private static readonly int DefiledMessageHeaderLength = NewLineLength + TimeHeaderBlockLength + LevelHeaderBlockLength;
+
     private const int ExceptionBlockPadding = 2;
+
+    private const int TimeHeaderLength = 12;
+
+    private const int TimeHeaderBlockLength = TimeHeaderLength + BlockMinimumLength;
+
+    private const int LevelHeaderBlockLength = 3 + BlockMinimumLength;
 
     private const int BlockMinimumLength = 3;
 
@@ -43,20 +51,15 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
     [MethodImpl(MethodImplOptions.NoInlining)]
     public string Render(in LogContext logContext)
     {
-        var dateText = FormatTime(logContext.Time);
-
         var levelText = FormatLevel(logContext.Level);
-        const int levelTextBlockLength = 3 + BlockMinimumLength;
 
         var sourceText = logContext.Source;
 
         var messageText = logContext.Message.Render();
 
         var messageLength = messageText.Length
-            + GetHeaderBlockLength(dateText)
-            + levelTextBlockLength
             + GetHeaderBlockLength(sourceText)
-            + NewLineLength;
+            + DefiledMessageHeaderLength;
 
         var exception = logContext.Exception;
 
@@ -68,7 +71,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
             try
             {
-                RenderHeader(ref messageBuilder, dateText, levelText, sourceText, messageText);
+                RenderHeader(ref messageBuilder, logContext.Time, levelText, sourceText, messageText);
 
                 return messageBuilder.ToString();
             }
@@ -99,7 +102,7 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
             try
             {
-                RenderHeader(ref messageBuilder, dateText, levelText, sourceText, messageText);
+                RenderHeader(ref messageBuilder, logContext.Time, levelText, sourceText, messageText);
 
                 RenderExceptionBlock(ref messageBuilder, ExceptionTypeBlockName, exceptionTypeName);
                 RenderExceptionBlock(ref messageBuilder, ExceptionMessageBlockName, exceptionMessage);
@@ -120,12 +123,12 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static void RenderHeader(scoped ref ValueStringBuilder messageBuilder,
-        string dateText,
+        DateTimeOffset time,
         string levelText,
         string sourceText,
         string messageText)
     {
-        RenderHeaderBlock(ref messageBuilder, dateText);
+        RenderTimeHeaderBlock(ref messageBuilder, time);
         RenderHeaderBlock(ref messageBuilder, levelText);
         RenderHeaderBlock(ref messageBuilder, sourceText);
 
@@ -146,6 +149,16 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
     {
         messageBuilder.Append('[');
         messageBuilder.Append(blockText);
+        messageBuilder.Append(']');
+        messageBuilder.Append(' ');
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void RenderTimeHeaderBlock(scoped ref ValueStringBuilder messageBuilder,
+        DateTimeOffset time)
+    {
+        messageBuilder.Append('[');
+        AppendTime(ref messageBuilder, time);
         messageBuilder.Append(']');
         messageBuilder.Append(' ');
     }
@@ -174,29 +187,39 @@ public sealed class SimpleLogContextRenderer : ILogContextRenderer
         return LevelShortNames[index];
     }
 
-    public static string FormatTime(DateTimeOffset time)
+    private static void AppendTime(scoped ref ValueStringBuilder messageBuilder, DateTimeOffset time)
     {
-        return string.Create(12, time.TimeOfDay, static (buffer, time) =>
+        messageBuilder.Append(TimeHeaderLength, time.TimeOfDay, static (buffer, time) =>
         {
             var hours = time.Hours;
-            buffer[0] = (char)('0' + hours / 10);
-            buffer[1] = (char)('0' + hours - hours / 10 * 10);
+            var hoursTensDigit = hours / 10;
+            var hoursOnesDigit = hours - hoursTensDigit * 10;
+            buffer[0] = (char)('0' + hoursTensDigit);
+            buffer[1] = (char)('0' + hoursOnesDigit);
             buffer[2] = ':';
 
             var minutes = time.Minutes;
-            buffer[3] = (char)('0' + minutes / 10);
-            buffer[4] = (char)('0' + minutes - minutes / 10 * 10);
+            var minutesTensDigit = minutes / 10;
+            var minutesOnesDigit = minutes - minutesTensDigit * 10;
+            buffer[3] = (char)('0' + minutesTensDigit);
+            buffer[4] = (char)('0' + minutesOnesDigit);
             buffer[5] = ':';
 
             var seconds = time.Seconds;
-            buffer[6] = (char)('0' + seconds / 10);
-            buffer[7] = (char)('0' + seconds - seconds / 10 * 10);
+            var secondsTensDigit = seconds / 10;
+            var secondsOnesDigit = seconds - secondsTensDigit * 10;
+            buffer[6] = (char)('0' + secondsTensDigit);
+            buffer[7] = (char)('0' + secondsOnesDigit);
             buffer[8] = '.';
 
             var milliseconds = time.Milliseconds;
-            buffer[9]  = (char)('0' + milliseconds / 100);
-            buffer[10] = (char)('0' + milliseconds - milliseconds / 100 * 100);
-            buffer[11] = (char)('0' + milliseconds - milliseconds / 10 * 10);
+            var millisecondsHundredsDigit = milliseconds / 100;
+            var millisecondsRemainder = milliseconds - millisecondsHundredsDigit * 100;
+            var millisecondsTensDigit = millisecondsRemainder / 10;
+            var millisecondsOnesDigit = millisecondsRemainder - millisecondsTensDigit * 10;
+            buffer[9] = (char)('0' + millisecondsHundredsDigit);
+            buffer[10] = (char)('0' + millisecondsTensDigit);
+            buffer[11] = (char)('0' + millisecondsOnesDigit);
         });
     }
 }
