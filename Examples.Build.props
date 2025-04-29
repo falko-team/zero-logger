@@ -3,7 +3,6 @@
 
     <PropertyGroup Label="Assembly">
         <OutputType>exe</OutputType>
-        <PublishAot>true</PublishAot>
     </PropertyGroup>
 
     <PropertyGroup Label="Language">
