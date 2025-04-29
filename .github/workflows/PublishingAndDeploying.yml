@@ -32,29 +32,11 @@ jobs:
             cd "$dir"
             if [[ ${{ github.event_name }} == "release" ]]; then
               dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true -f net8.0
-            else
-              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true -f net8.0
-            fi
-            cd -
-          fi
-        done
-        for dir in ./Sources/*; do
-          if [[ -d "$dir" ]]; then
-            cd "$dir"
-            if [[ ${{ github.event_name }} == "release" ]]; then
               dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true -f net9.0
-            else
-              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true -f net9.0
-            fi
-            cd -
-          fi
-        done
-        for dir in ./Sources/*; do
-          if [[ -d "$dir" ]]; then
-            cd "$dir"
-            if [[ ${{ github.event_name }} == "release" ]]; then
               dotnet pack -c Release --no-restore -p:Version=${{ env.VERSION }} -p:PackageVersion=${{ env.VERSION }} -p:ContinuousIntegrationBuild=true
             else
+              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true -f net8.0
+              dotnet publish -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true -f net9.0
               dotnet pack -c Release --no-restore -p:Version=${{ env.VERSION }}.${{ github.run_number }} -p:PackageVersion=${{ env.VERSION }}.${{ github.run_number }}-preview -p:ContinuousIntegrationBuild=true
             fi
             cd -
