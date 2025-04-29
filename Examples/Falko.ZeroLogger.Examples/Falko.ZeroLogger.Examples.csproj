@@ -3,6 +3,7 @@
 
     <PropertyGroup Label="Assembly">
         <AssemblyName>Bot</AssemblyName>
+        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup Label="Dependencies">
