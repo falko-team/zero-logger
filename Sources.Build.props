@@ -3,6 +3,7 @@
 
     <PropertyGroup Label="Assembly">
         <IsPackable>true</IsPackable>
+        <Optimize Condition="$(Configuration) == 'Release'">true</Optimize>
         <DebugType>portable</DebugType>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -12,7 +13,6 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
         <EnablePackageValidation>true</EnablePackageValidation>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <OutputType>Library</OutputType>
     </PropertyGroup>
 

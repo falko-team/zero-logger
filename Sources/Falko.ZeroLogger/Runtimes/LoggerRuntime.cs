@@ -19,7 +19,7 @@ public static partial class LoggerRuntime
 
     private static CancellationTokenSource? _contextCancellation;
 
-    internal static LoggerContext Context = DefaultContext;
+    internal static volatile LoggerContext Context = DefaultContext;
 
     public static LogLevel Level => Context.Level;
 
