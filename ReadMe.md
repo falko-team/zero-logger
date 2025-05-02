@@ -39,7 +39,7 @@ Compare the performance of the Zero Logger with the NLog library.
 >   Job-YJZQKG : .NET 10.0.0-preview.3.25171.5, X64 NativeAOT AVX2
 > 
 >   Job-CWVCEM : .NET 9.0.3, X64 NativeAOT AVX2
-
+> 
 > RunStrategy=Throughput
 
 | Method              | Runtime        | Mean      | Ratio | Allocated | Alloc Ratio |
@@ -78,8 +78,8 @@ Compare the performance of the Zero Logger with the NLog library.
 > Job-YJZQKG : .NET 10.0.0-preview.3.25171.5, X64 NativeAOT AVX2
 > 
 > Job-CWVCEM : .NET 9.0.3, X64 NativeAOT AVX2
-
-RunStrategy=Throughput
+>
+> RunStrategy=Throughput
 
 | Method              | Runtime        | Mean     | Ratio | Allocated | Alloc Ratio |
 |-------------------- |--------------- |---------:|------:|----------:|------------:|
