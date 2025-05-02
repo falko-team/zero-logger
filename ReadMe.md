@@ -20,7 +20,7 @@ LoggerRuntime.Dispose();
 
 Compare the performance of the Zero Logger with the NLog library.
 
-### Performance Test **without** Rendering of Log String with Three Same Layouts
+### Performance without Rendering of Log String with Three Same Layouts
 
 > BenchmarkDotNet v0.14.1-develop (2025-05-02), Linux Ubuntu 24.04.2 LTS (Noble Numbat)
 > 
@@ -59,7 +59,7 @@ Compare the performance of the Zero Logger with the NLog library.
 | RenderZeroLoggerLog | NativeAOT 9.0  |  6.904 us |  1.00 |   7.81 KB |        1.00 |
 | RenderNLogLoggerLog | NativeAOT 9.0  | 11.095 us |  1.61 |  17.19 KB |        2.20 |
 
-### Performance Test **with** Rendering of Log String with Three Same Layouts
+### Performance with Rendering of Log String with Three Same Layouts
 
 > BenchmarkDotNet v0.14.1-develop (2025-05-02), Linux Ubuntu 24.04.2 LTS (Noble Numbat)
 > 
