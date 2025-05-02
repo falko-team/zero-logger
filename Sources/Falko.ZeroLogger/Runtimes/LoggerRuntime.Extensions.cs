@@ -2,18 +2,18 @@ using System.Logging.Builders;
 
 namespace System.Logging.Runtimes;
 
-public static partial class LoggerRuntime
+public sealed partial class LoggerRuntime
 {
     private static TimeSpan DefaultTimeout => TimeSpan.FromSeconds(30);
 
     #region Initialize
 
-    public static void Initialize(LoggerContextBuilder loggerBuilder)
+    public void Initialize(LoggerContextBuilder loggerBuilder)
     {
         Initialize(loggerBuilder, CancellationToken.None);
     }
 
-    public static void Initialize(LoggerContextBuilder loggerBuilder, TimeSpan timeout)
+    public void Initialize(LoggerContextBuilder loggerBuilder, TimeSpan timeout)
     {
         using var source = CreateTimeoutCancellationSource(timeout);
 
@@ -24,14 +24,14 @@ public static partial class LoggerRuntime
 
     #region Dispose
 
-    public static void Dispose()
+    public void Dispose()
     {
         using var source = CreateTimeoutCancellationSource();
 
         Dispose(source.Token);
     }
 
-    public static void Dispose(TimeSpan timeout)
+    public void Dispose(TimeSpan timeout)
     {
         using var source = CreateTimeoutCancellationSource(timeout);
 

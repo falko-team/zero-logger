@@ -1,31 +1,28 @@
 using System.Logging.Builders;
 using System.Logging.Contexts;
 using System.Logging.Debugs;
-using System.Logging.Logs;
 using System.Logging.Targets;
 using System.Runtime.CompilerServices;
 
 namespace System.Logging.Runtimes;
 
-public static partial class LoggerRuntime
+public sealed partial class LoggerRuntime
 {
+    public static readonly LoggerRuntime Global = new();
+
 #if NET9_0_OR_GREATER
-    private static readonly Lock Locker = new();
+    private readonly Lock _locker = new();
 #else
-    private static readonly object Locker = new();
+    private readonly object _locker = new();
 #endif
 
-    private static readonly LoggerContext DefaultContext = new(LogLevel.Trace, [], [], new CancellationToken(true));
+    private CancellationTokenSource? _contextCancellation;
 
-    private static CancellationTokenSource? _contextCancellation;
+    internal volatile LoggerContext Context = LoggerContext.Empty;
 
-    internal static volatile LoggerContext Context = DefaultContext;
-
-    public static LogLevel Level => Context.Level;
-
-    public static void Initialize(LoggerContextBuilder loggerBuilder, CancellationToken cancellationToken)
+    public void Initialize(LoggerContextBuilder loggerBuilder, CancellationToken cancellationToken)
     {
-        lock (Locker)
+        lock (_locker)
         {
             Dispose(cancellationToken);
 
@@ -54,13 +51,13 @@ public static partial class LoggerRuntime
         }
     }
 
-    public static void Dispose(CancellationToken cancellationToken)
+    public void Dispose(CancellationToken cancellationToken)
     {
-        lock (Locker)
+        lock (_locker)
         {
             var loggerContext = Context;
 
-            if (loggerContext.CancellationToken.IsCancellationRequested) return;
+            if (loggerContext.Cancellation.IsCancellationRequested) return;
 
             var cancellationTokenSource = _contextCancellation!;
 
@@ -104,7 +101,7 @@ public static partial class LoggerRuntime
             }
 
             _contextCancellation = null;
-            Context = DefaultContext;
+            Context = LoggerContext.Empty;
         }
     }
 

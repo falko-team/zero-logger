@@ -4,7 +4,10 @@ using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 
+BenchmarkRunner.Run<DateTimeOffsetBenchmark>();
+BenchmarkRunner.Run<LogIgnoringBenchmark>();
 BenchmarkRunner.Run<LogWritingBenchmark>();
+BenchmarkRunner.Run<LogRenderingBenchmark>();
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
@@ -12,6 +15,8 @@ BenchmarkRunner.Run<LogWritingBenchmark>();
 [MinColumn, MeanColumn, MaxColumn]
 public class DateTimeOffsetBenchmark
 {
+    private readonly DateTimeOffsetProvider _dateTimeOffsetProvider = DateTimeOffsetProvider.Instance;
+
     private const int Iterations = 100;
 
     [GlobalSetup]
@@ -25,7 +30,7 @@ public class DateTimeOffsetBenchmark
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
-            _ = DateTimeOffsetProvider.Now;
+            _ = _dateTimeOffsetProvider.Now;
         }
     }
 
@@ -53,7 +58,7 @@ public class DateTimeOffsetBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogIgnoringBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
         .CreateLoggerOfType<LogIgnoringBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
@@ -104,7 +109,7 @@ public class LogIgnoringBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogRenderingBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
         .CreateLoggerOfType<LogRenderingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
@@ -144,7 +149,7 @@ public class LogRenderingBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogWritingBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
         .CreateLoggerOfType<LogWritingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
@@ -187,7 +192,7 @@ file static class RenderingLoggerConfigurer
 
     private static void ConfigureZeroLogger()
     {
-        System.Logging.Runtimes.LoggerRuntime
+        System.Logging.Runtimes.LoggerRuntime.Global
             .Initialize(new System.Logging.Builders.LoggerContextBuilder()
                 .SetLevel(System.Logging.Logs.LogLevels.InfoAndAbove)
                 .AddTarget(System.Logging.Renderers.SimpleLogContextRenderer.Instance,
@@ -256,7 +261,7 @@ file static class EmptyLoggerConfigurer
 
     private static void ConfigureZeroLogger()
     {
-        System.Logging.Runtimes.LoggerRuntime
+        System.Logging.Runtimes.LoggerRuntime.Global
             .Initialize(new System.Logging.Builders.LoggerContextBuilder()
                 .SetLevel(System.Logging.Logs.LogLevels.InfoAndAbove)
                 .AddTarget(System.Logging.Renderers.SimpleLogContextRenderer.Instance,

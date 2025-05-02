@@ -1,45 +1,23 @@
 ﻿using System.Logging.Builders;
-using System.Logging.Debugs;
 using System.Logging.Factories;
 using System.Logging.Logs;
 using System.Logging.Renderers;
 using System.Logging.Runtimes;
 using System.Logging.Targets;
 
-DebugEventLogger.AddHandler(static (message, exception) => Console
-    .WriteLine($"Logger Internal Event: {message} {exception}"));
+var builder = new LoggerContextBuilder();
 
-LoggerRuntime.Initialize(new LoggerContextBuilder()
-    .SetLevel(LogLevels.TraceAndAbove)
-    .AddTarget(SimpleLogContextRenderer.Instance, LoggerConsoleTarget.Instance)
-    .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("b", "./Logs")));
+builder.SetLevel(LogLevels.InfoAndAbove);
 
-var logger = LoggerFactory.CreateLoggerOfType<Program>();
+builder.AddTarget(SimpleLogContextRenderer.Instance, LoggerConsoleTarget.Instance);
+builder.AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("program", "./Logs"));
 
-// good for values with the lazy default to-string invocation for created before values
-// except custom structures, cause for them, need to use the LogMessageArgument<T> factory to avoid boxing
-logger.Info(static () => "PI is {0}", Math.PI);
+LoggerRuntime.Global.Initialize(builder);
 
-// good for custom structures or values with the lazy custom to-string invocation
-logger.Info(static () => "PI is {0}", new LogMessageArgument<double>(Math.PI, static v => v.ToString("F")));
+var logger = LoggerFactory.Global.CreateLoggerOfType<Program>();
 
-// good for values that are creating lazy in the message factory to string
-logger.Info(static () => "PI is {0}", static () => Math.PI.ToString("F"));
+logger.Info(static () => "App started");
+logger.Error(new Exception(), static () => "Error occurred");
+logger.Debug(static () => "CurrentTime: {CurrentTime}", static () => DateTime.Now);
 
-// good for string that is created before
-logger.Info(static () => "PI is {0}", "3.14");
-
-// good for string that doesn't create before
-logger.Info(static () => "PI is {0}", static () => "3.14");
-
-try
-{
-    throw new Exception();
-}
-catch (Exception exception)
-{
-    // for errors
-    logger.Error(exception, () => "Error handled");
-}
-
-LoggerRuntime.Dispose();
+LoggerRuntime.Global.Dispose();

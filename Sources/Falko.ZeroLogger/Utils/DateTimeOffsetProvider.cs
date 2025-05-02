@@ -3,30 +3,34 @@ using System.Runtime.CompilerServices;
 
 namespace System.Logging.Utils;
 
-public static class DateTimeOffsetProvider
+public class DateTimeOffsetProvider
 {
-    private const long CachedTimeUpdateIntervalTicks = 3 * 1000 * 1000; // 3ms
+    public static readonly DateTimeOffsetProvider Instance = new();
 
-    private static readonly Stopwatch Stopwatch = Stopwatch.StartNew();
+    private const long CachedTimeUpdateIntervalTicks = 10 * 1000 * 1000; // 10ms
 
-    private static readonly float StopwatchTickToDateTimeTicks = TimeSpan.TicksPerSecond / (float)Stopwatch.Frequency;
+    private readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
-    private static DateTimeOffset _cachedTime = DateTimeOffset.Now;
+    private readonly float _stopwatchTickToDateTimeTicks = TimeSpan.TicksPerSecond / (float)Stopwatch.Frequency;
 
-    private static long _lastTicksTime = Stopwatch.ElapsedTicks;
+    private DateTimeOffset _cachedTime = DateTimeOffset.Now;
 
-    public static DateTimeOffset Now
+    private long _lastTicksTime;
+
+    private DateTimeOffsetProvider() => _lastTicksTime = _stopwatch.ElapsedTicks;
+
+    public DateTimeOffset Now
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get
         {
-            var currentTicks = Stopwatch.ElapsedTicks;
+            var currentTicks = _stopwatch.ElapsedTicks;
 
             var currentTicksDelta = currentTicks - _lastTicksTime;
 
             if (currentTicksDelta < CachedTimeUpdateIntervalTicks)
             {
-                return _cachedTime.AddTicks((long)(currentTicksDelta * StopwatchTickToDateTimeTicks));
+                return _cachedTime.AddTicks((long)(currentTicksDelta * _stopwatchTickToDateTimeTicks));
             }
 
             _cachedTime = DateTimeOffset.Now;

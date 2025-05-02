@@ -3,6 +3,7 @@ using System.Logging.Debugs;
 using System.Logging.Factories;
 using System.Logging.Logs;
 using System.Logging.Renderers;
+using System.Logging.Runtimes;
 using System.Logging.Targets;
 using System.Logging.Utils;
 using System.Numerics;
@@ -12,8 +13,10 @@ using System.Runtime.InteropServices;
 namespace System.Logging.Loggers;
 
 [method: MethodImpl(MethodImplOptions.AggressiveInlining)]
-public readonly partial struct Logger(string name)
+public readonly partial struct Logger(LoggerRuntime loggerRuntime, string loggerSource)
 {
+    private readonly DateTimeOffsetProvider _timeProvider = DateTimeOffsetProvider.Instance;
+
     #region Log()
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -21,11 +24,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleMessageLogMessageRenderer(message);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -33,11 +36,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleMessageLogMessageRenderer(message);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -46,21 +49,21 @@ public readonly partial struct Logger(string name)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleMessageFactoryLogMessageRenderer(messageFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -76,11 +79,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -89,11 +92,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -103,22 +106,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         short argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         short argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -134,11 +137,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -147,11 +150,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -161,22 +164,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         ushort argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         ushort argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -192,11 +195,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -205,11 +208,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -219,22 +222,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         int argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         int argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -250,11 +253,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -263,11 +266,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -277,22 +280,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         nint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         nint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -308,11 +311,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -321,11 +324,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -335,22 +338,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         uint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         uint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -366,11 +369,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -379,11 +382,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -393,22 +396,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         nuint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         nuint argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -424,11 +427,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -437,11 +440,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -451,22 +454,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         long argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         long argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -482,11 +485,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -495,11 +498,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -509,22 +512,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         ulong argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         ulong argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -540,11 +543,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -553,11 +556,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -567,22 +570,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         BigInteger argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         BigInteger argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -598,11 +601,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -611,11 +614,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -625,22 +628,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         float argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         float argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -656,11 +659,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -669,11 +672,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -683,22 +686,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         double argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         double argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -714,11 +717,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -727,11 +730,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -741,22 +744,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         decimal argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         decimal argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -772,11 +775,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -785,11 +788,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -799,22 +802,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         Guid argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         Guid argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -830,11 +833,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -843,11 +846,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -857,22 +860,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         TimeSpan argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         TimeSpan argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -888,11 +891,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -901,11 +904,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -915,22 +918,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         TimeOnly argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         TimeOnly argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -946,11 +949,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -959,11 +962,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -973,22 +976,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         DateTime argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         DateTime argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1004,11 +1007,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1017,11 +1020,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1031,22 +1034,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         DateTimeOffset argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         DateTimeOffset argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1062,11 +1065,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1075,11 +1078,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1089,22 +1092,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         DateOnly argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         DateOnly argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1120,11 +1123,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1133,11 +1136,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1147,22 +1150,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         byte argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         byte argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1178,11 +1181,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1191,11 +1194,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1205,22 +1208,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         sbyte argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         sbyte argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1236,11 +1239,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1249,11 +1252,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1263,22 +1266,22 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         char argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         char argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1294,12 +1297,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1308,12 +1311,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageLogMessageRenderer(message,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1323,24 +1326,24 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         string? argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         string? argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleStringArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1357,13 +1360,13 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1373,13 +1376,13 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1390,13 +1393,13 @@ public readonly partial struct Logger(string name)
         string? argument1,
         string? argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1404,13 +1407,13 @@ public readonly partial struct Logger(string name)
         string? argument1,
         string? argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1428,14 +1431,14 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1446,14 +1449,14 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageLogMessageRenderer(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1465,14 +1468,14 @@ public readonly partial struct Logger(string name)
         string? argument2,
         string? argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1481,14 +1484,14 @@ public readonly partial struct Logger(string name)
         string? argument2,
         string? argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1507,7 +1510,7 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1515,7 +1518,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1527,7 +1530,7 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageLogMessageRenderer(message,
             argument1,
@@ -1535,7 +1538,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1548,7 +1551,7 @@ public readonly partial struct Logger(string name)
         string? argument3,
         string? argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1556,7 +1559,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1566,7 +1569,7 @@ public readonly partial struct Logger(string name)
         string? argument3,
         string? argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argument1,
@@ -1574,7 +1577,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1590,12 +1593,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1604,12 +1607,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageLogMessageRenderer(message,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1619,24 +1622,24 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         params string?[] arguments)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         params string?[] arguments)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyStringArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1652,11 +1655,11 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1665,11 +1668,11 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageLogMessageRenderer<T>(message, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1679,22 +1682,22 @@ public readonly partial struct Logger(string name)
     private void Log<T>(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         T argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log<T>(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         T argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleInstanceArgumentMessageFactoryLogMessageRenderer<T>(messageFactory, argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider) { Exception = exception });
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider) { Exception = exception });
     }
 
     #endregion
@@ -1708,13 +1711,13 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1724,13 +1727,13 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1741,13 +1744,13 @@ public readonly partial struct Logger(string name)
         T1 argument1,
         T2 argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1755,13 +1758,13 @@ public readonly partial struct Logger(string name)
         T1 argument1,
         T2 argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1779,14 +1782,14 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1797,14 +1800,14 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1816,14 +1819,14 @@ public readonly partial struct Logger(string name)
         T2 argument2,
         T3 argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1832,14 +1835,14 @@ public readonly partial struct Logger(string name)
         T2 argument2,
         T3 argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1858,7 +1861,7 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -1866,7 +1869,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1878,7 +1881,7 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -1886,7 +1889,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1899,7 +1902,7 @@ public readonly partial struct Logger(string name)
         T3 argument3,
         T4 argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -1907,7 +1910,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1917,7 +1920,7 @@ public readonly partial struct Logger(string name)
         T3 argument3,
         T4 argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourInstanceArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -1925,7 +1928,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1941,12 +1944,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1955,12 +1958,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageLogMessageRenderer(message,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -1970,24 +1973,24 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         params object?[] arguments)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         params object?[] arguments)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyInstanceArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             arguments);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2003,12 +2006,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2017,12 +2020,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleArgumentMessageLogMessageRenderer<T>(message,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2032,24 +2035,24 @@ public readonly partial struct Logger(string name)
     private void Log<T>(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         LogMessageArgument<T> argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log<T>(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         LogMessageArgument<T> argument)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleArgumentMessageFactoryLogMessageRenderer<T>(messageFactory,
             argument);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2066,13 +2069,13 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2082,13 +2085,13 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageLogMessageRenderer<T1, T2>(message,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2099,13 +2102,13 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T1> argument1,
         LogMessageArgument<T2> argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2113,13 +2116,13 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T1> argument1,
         LogMessageArgument<T2> argument2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoArgumentsMessageFactoryLogMessageRenderer<T1, T2>(messageFactory,
             argument1,
             argument2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2137,14 +2140,14 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2155,14 +2158,14 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageLogMessageRenderer<T1, T2, T3>(message,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2174,14 +2177,14 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T2> argument2,
         LogMessageArgument<T3> argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2190,14 +2193,14 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T2> argument2,
         LogMessageArgument<T3> argument3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3>(messageFactory,
             argument1,
             argument2,
             argument3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2216,7 +2219,7 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2224,7 +2227,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2236,7 +2239,7 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourArgumentsMessageLogMessageRenderer<T1, T2, T3, T4>(message,
             argument1,
@@ -2244,7 +2247,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2257,7 +2260,7 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T3> argument3,
         LogMessageArgument<T4> argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2265,7 +2268,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2275,7 +2278,7 @@ public readonly partial struct Logger(string name)
         LogMessageArgument<T3> argument3,
         LogMessageArgument<T4> argument4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourArgumentsMessageFactoryLogMessageRenderer<T1, T2, T3, T4>(messageFactory,
             argument1,
@@ -2283,7 +2286,7 @@ public readonly partial struct Logger(string name)
             argument3,
             argument4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2299,12 +2302,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2313,12 +2316,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageLogMessageRenderer(message,
             argumentFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2328,24 +2331,24 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         LogMessageArgumentFactory argumentFactory)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         LogMessageArgumentFactory argumentFactory)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new SingleFactoryArgumentMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2362,13 +2365,13 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2378,13 +2381,13 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2395,13 +2398,13 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory1,
         LogMessageArgumentFactory argumentFactory2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2409,13 +2412,13 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory1,
         LogMessageArgumentFactory argumentFactory2)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new TwoFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2433,14 +2436,14 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2451,14 +2454,14 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2470,14 +2473,14 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory2,
         LogMessageArgumentFactory argumentFactory3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2486,14 +2489,14 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory2,
         LogMessageArgumentFactory argumentFactory3)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ThreeFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
             argumentFactory2,
             argumentFactory3);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2512,7 +2515,7 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -2520,7 +2523,7 @@ public readonly partial struct Logger(string name)
             argumentFactory3,
             argumentFactory4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2532,7 +2535,7 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactory1,
@@ -2540,7 +2543,7 @@ public readonly partial struct Logger(string name)
             argumentFactory3,
             argumentFactory4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2553,7 +2556,7 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory3,
         LogMessageArgumentFactory argumentFactory4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -2561,7 +2564,7 @@ public readonly partial struct Logger(string name)
             argumentFactory3,
             argumentFactory4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2571,7 +2574,7 @@ public readonly partial struct Logger(string name)
         LogMessageArgumentFactory argumentFactory3,
         LogMessageArgumentFactory argumentFactory4)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new FourFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactory1,
@@ -2579,7 +2582,7 @@ public readonly partial struct Logger(string name)
             argumentFactory3,
             argumentFactory4);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2595,12 +2598,12 @@ public readonly partial struct Logger(string name)
     {
         if (message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2609,12 +2612,12 @@ public readonly partial struct Logger(string name)
     {
         if (exception is null && message is null) return;
 
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageLogMessageRenderer(message,
             argumentFactories);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2624,24 +2627,24 @@ public readonly partial struct Logger(string name)
     private void Log(LoggerContext loggerContext, LogLevel level, LogMessageFactory messageFactory,
         params LogMessageArgumentFactory[] argumentFactories)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider));
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Log(LoggerContext loggerContext, LogLevel level, Exception? exception, LogMessageFactory messageFactory,
         params LogMessageArgumentFactory[] argumentFactories)
     {
-        var time = DateTimeOffsetProvider.Now;
+        var time = _timeProvider.Now;
 
         var messageProvider = new ManyFactoryArgumentsMessageFactoryLogMessageRenderer(messageFactory,
             argumentFactories);
 
-        PublishLog(loggerContext, new LogContext(name, level, time, messageProvider)
+        PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
             Exception = exception
         });
@@ -2660,7 +2663,7 @@ public readonly partial struct Logger(string name)
         // ReSharper disable once ConvertIfStatementToSwitchStatement
         if (targetsLength > 1)
         {
-            var cancellationToken = loggerContext.CancellationToken;
+            var cancellationToken = loggerContext.Cancellation;
 
             scoped ref var targetsRef = ref MemoryMarshal.GetArrayDataReference(targets);
 
@@ -2714,7 +2717,7 @@ public readonly partial struct Logger(string name)
         }
         else if (targetsLength is 1)
         {
-            PublishLog(targets[0], logContext, renderers[0].Renderer, loggerContext.CancellationToken);
+            PublishLog(targets[0], logContext, renderers[0].Renderer, loggerContext.Cancellation);
         }
     }
 
