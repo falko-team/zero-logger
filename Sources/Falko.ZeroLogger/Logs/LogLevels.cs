@@ -31,4 +31,9 @@ public static class LogLevels
     public static LogLevel ErrorAndAbove =>
         LogLevel.Error |
         LogLevel.Fatal;
+
+    public static LogLevel FatalAndAbove =>
+        LogLevel.Fatal;
+
+    public static LogLevel None => 0;
 }

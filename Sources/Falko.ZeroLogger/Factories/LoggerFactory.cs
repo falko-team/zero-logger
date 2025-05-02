@@ -1,27 +1,30 @@
 using System.Logging.Loggers;
+using System.Logging.Runtimes;
 using System.Runtime.CompilerServices;
 
 namespace System.Logging.Factories;
 
-public static class LoggerFactory
+public sealed class LoggerFactory(LoggerRuntime loggerRuntime)
 {
-    public static Logger CreateLoggerOfName(string name)
+    public static readonly LoggerFactory Global = new(LoggerRuntime.Global);
+
+    public Logger CreateLoggerOfName(string name)
     {
         ArgumentNullException.ThrowIfNull(name);
 
-        return new Logger(name);
+        return new Logger(loggerRuntime, name);
     }
 
-    public static Logger CreateLoggerOfType<T>() where T : notnull
+    public Logger CreateLoggerOfType<T>() where T : notnull
     {
         var name = typeof(T).FullName;
 
         ArgumentNullException.ThrowIfNull(name);
 
-        return new Logger(name);
+        return new Logger(loggerRuntime, name);
     }
 
-    public static Logger CreateLoggerOfType(Type type)
+    public Logger CreateLoggerOfType(Type type)
     {
         ArgumentNullException.ThrowIfNull(type);
 
@@ -29,15 +32,15 @@ public static class LoggerFactory
 
         ArgumentNullException.ThrowIfNull(name);
 
-        return new Logger(name);
+        return new Logger(loggerRuntime, name);
     }
 
-    public static Logger CreateLoggerOfObject()
+    public Logger CreateLoggerOfObject()
     {
         throw new NotImplementedException();
     }
 
-    public static Logger CreateLoggerOfMethod<T>([CallerMemberName] string member = null!) where T : notnull
+    public Logger CreateLoggerOfMethod<T>([CallerMemberName] string member = null!) where T : notnull
     {
         ArgumentNullException.ThrowIfNull(member);
 
@@ -45,10 +48,10 @@ public static class LoggerFactory
 
         ArgumentNullException.ThrowIfNull(name);
 
-        return new Logger($"{name}.{member}");
+        return new Logger(loggerRuntime, $"{name}.{member}");
     }
 
-    public static Logger CreateLoggerOfMethod(Type type, [CallerMemberName] string member = null!)
+    public Logger CreateLoggerOfMethod(Type type, [CallerMemberName] string member = null!)
     {
         ArgumentNullException.ThrowIfNull(type);
         ArgumentNullException.ThrowIfNull(member);
@@ -57,7 +60,7 @@ public static class LoggerFactory
 
         ArgumentNullException.ThrowIfNull(name);
 
-        return new Logger($"{name}.{member}");
+        return new Logger(loggerRuntime, $"{name}.{member}");
     }
 
     public static Logger CreateLoggerOfMethod([CallerMemberName] string member = null!)
