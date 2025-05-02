@@ -104,7 +104,6 @@ public class LogIgnoringBenchmark
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
 [MinColumn, MeanColumn, MaxColumn]
 public class LogRenderingBenchmark
@@ -144,7 +143,6 @@ public class LogRenderingBenchmark
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
 [MinColumn, MeanColumn, MaxColumn]
 public class LogWritingBenchmark
