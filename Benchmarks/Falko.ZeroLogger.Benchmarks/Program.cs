@@ -5,13 +5,14 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 
 BenchmarkRunner.Run<LogIgnoringBenchmark>();
-BenchmarkRunner.Run<SingleArgumentLogRenderingBenchmark>();
-BenchmarkRunner.Run<TwoArgumentsLogRenderingBenchmark>();
-BenchmarkRunner.Run<DateTimeOffsetBenchmark>();
+BenchmarkRunner.Run<LogWritingBenchmark>();
+BenchmarkRunner.Run<LogRenderingBenchmark>();
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
-[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
+[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
+[MinColumn, MeanColumn, MaxColumn]
 public class DateTimeOffsetBenchmark
 {
     private const int Iterations = 100;
@@ -19,7 +20,7 @@ public class DateTimeOffsetBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        LoggerConfigurer.Configure();
+        RenderingLoggerConfigurer.Configure();
     }
 
     [Benchmark(Baseline = true)]
@@ -28,6 +29,15 @@ public class DateTimeOffsetBenchmark
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
             _ = DateTimeOffsetProvider.Now;
+        }
+    }
+
+    [Benchmark]
+    public void CreatedUtcDateTime()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            _ = DateTime.UtcNow;
         }
     }
 
@@ -41,12 +51,10 @@ public class DateTimeOffsetBenchmark
     }
 }
 
-[RPlotExporter]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
-[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
+[MinColumn, MeanColumn, MaxColumn]
 public class LogIgnoringBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
@@ -60,10 +68,19 @@ public class LogIgnoringBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        LoggerConfigurer.Configure();
+        RenderingLoggerConfigurer.Configure();
     }
 
     [Benchmark(Baseline = true)]
+    public void IgnoreNLogLoggerLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            NLogLogger.Trace("Iteration {IterationNumber}", iteration);
+        }
+    }
+
+    [Benchmark]
     public void IgnoreZeroLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
@@ -73,26 +90,26 @@ public class LogIgnoringBenchmark
     }
 
     [Benchmark]
-    public void IgnoreNLogLoggerLog()
+    public void IgnoreZeroLoggerLog2()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
-            NLogLogger.Trace("Iteration {IterationNumber}", iteration);
+            ZeroLogger.Trace("Iteration {IterationNumber}", iteration);
         }
     }
+
+
 }
 
-[RPlotExporter]
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
-[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
-public class SingleArgumentLogRenderingBenchmark
+[MinColumn, MeanColumn, MaxColumn]
+public class LogRenderingBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
-        .CreateLoggerOfType<SingleArgumentLogRenderingBenchmark>();
+        .CreateLoggerOfType<LogRenderingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
         .GetCurrentClassLogger();
@@ -102,7 +119,7 @@ public class SingleArgumentLogRenderingBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        LoggerConfigurer.Configure();
+        RenderingLoggerConfigurer.Configure();
     }
 
     [Benchmark(Baseline = true)]
@@ -124,17 +141,15 @@ public class SingleArgumentLogRenderingBenchmark
     }
 }
 
-[RPlotExporter]
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot80)]
-[MinColumn, Q1Column, MeanColumn, MedianColumn, Q3Column, MaxColumn]
-public class TwoArgumentsLogRenderingBenchmark
+[MinColumn, MeanColumn, MaxColumn]
+public class LogWritingBenchmark
 {
     private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory
-        .CreateLoggerOfType<TwoArgumentsLogRenderingBenchmark>();
+        .CreateLoggerOfType<LogWritingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
         .GetCurrentClassLogger();
@@ -144,7 +159,7 @@ public class TwoArgumentsLogRenderingBenchmark
     [GlobalSetup]
     public void Setup()
     {
-        LoggerConfigurer.Configure();
+        EmptyLoggerConfigurer.Configure();
     }
 
     [Benchmark(Baseline = true)]
@@ -152,7 +167,7 @@ public class TwoArgumentsLogRenderingBenchmark
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
-            ZeroLogger.Info("Iteration {IterationNumber1} {IterationNumber2}", iteration, iteration);
+            ZeroLogger.Info("Iteration {IterationNumber}", iteration);
         }
     }
 
@@ -161,12 +176,81 @@ public class TwoArgumentsLogRenderingBenchmark
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
-            NLogLogger.Info("Iteration {IterationNumber1} {IterationNumber2}", iteration, iteration);
+            NLogLogger.Info("Iteration {IterationNumber}", iteration);
         }
     }
 }
 
-file static class LoggerConfigurer
+file static class RenderingLoggerConfigurer
+{
+    public static void Configure()
+    {
+        ConfigureZeroLogger();
+        ConfigureNLogLogger();
+    }
+
+    private static void ConfigureZeroLogger()
+    {
+        System.Logging.Runtimes.LoggerRuntime
+            .Initialize(new System.Logging.Builders.LoggerContextBuilder()
+                .SetLevel(System.Logging.Logs.LogLevels.InfoAndAbove)
+                .AddTarget(System.Logging.Renderers.SimpleLogContextRenderer.Instance,
+                    RenderingZeroLoggerTarget.Instance)
+                .AddTarget(System.Logging.Renderers.SimpleLogContextRenderer.Instance,
+                    RenderingZeroLoggerTarget.Instance)
+                .AddTarget(System.Logging.Renderers.SimpleLogContextRenderer.Instance,
+                    RenderingZeroLoggerTarget.Instance));
+    }
+
+    private static void ConfigureNLogLogger()
+    {
+        var configuration = new NLog.Config.LoggingConfiguration();
+
+        configuration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal,
+            RenderingNLogLoggerTarget.Instance);
+        configuration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal,
+            RenderingNLogLoggerTarget.Instance);
+        configuration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal,
+            RenderingNLogLoggerTarget.Instance);
+
+        NLog.LogManager.Configuration = configuration;
+    }
+}
+
+file sealed class RenderingZeroLoggerTarget : System.Logging.Targets.LoggerTarget
+{
+    public static readonly RenderingZeroLoggerTarget Instance = new();
+
+    private RenderingZeroLoggerTarget() { }
+
+    public override void Initialize(CancellationToken cancellationToken) { }
+
+    public override void Publish(in System.Logging.Contexts.LogContext context,
+        System.Logging.Renderers.ILogContextRenderer renderer,
+        CancellationToken cancellationToken)
+    {
+        _ = renderer.Render(context);
+    }
+
+    public override void Dispose(CancellationToken cancellationToken) { }
+}
+
+file sealed class RenderingNLogLoggerTarget : NLog.Targets.TargetWithLayout
+{
+    public static readonly RenderingNLogLoggerTarget Instance = new()
+    {
+        Layout = "[${time}] [${level:uppercase=true}] [${logger}] ${message}",
+    };
+
+    private RenderingNLogLoggerTarget() { }
+
+    protected override void Write(NLog.LogEventInfo logEvent)
+    {
+        _ = Layout.Render(logEvent);
+    }
+}
+
+file static class EmptyLoggerConfigurer
 {
     public static void Configure()
     {
@@ -214,7 +298,7 @@ file sealed class EmptyZeroLoggerTarget : System.Logging.Targets.LoggerTarget
         System.Logging.Renderers.ILogContextRenderer renderer,
         CancellationToken cancellationToken)
     {
-        _ = renderer.Render(context);
+        _ = context;
     }
 
     public override void Dispose(CancellationToken cancellationToken) { }
@@ -231,6 +315,6 @@ file sealed class EmptyNLogLoggerTarget : NLog.Targets.TargetWithLayout
 
     protected override void Write(NLog.LogEventInfo logEvent)
     {
-        _ = Layout.Render(logEvent);
+        _ = logEvent;
     }
 }
