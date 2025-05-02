@@ -4,13 +4,10 @@ using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 
-BenchmarkRunner.Run<LogIgnoringBenchmark>();
 BenchmarkRunner.Run<LogWritingBenchmark>();
-BenchmarkRunner.Run<LogRenderingBenchmark>();
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
 [MinColumn, MeanColumn, MaxColumn]
 public class DateTimeOffsetBenchmark
@@ -52,7 +49,6 @@ public class DateTimeOffsetBenchmark
 }
 
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
-[SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NativeAot90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
 [MinColumn, MeanColumn, MaxColumn]
 public class LogIgnoringBenchmark
