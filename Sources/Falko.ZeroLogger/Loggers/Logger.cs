@@ -81,7 +81,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<short>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -94,7 +95,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<short>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -108,7 +110,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<short>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -119,7 +122,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<short>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -139,7 +143,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<ushort>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -152,7 +157,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<ushort>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -166,7 +172,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<ushort>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -177,7 +184,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<ushort>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -197,7 +205,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<int>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -210,7 +219,7 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<int>(message, argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -224,7 +233,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<int>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -235,7 +245,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<int>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -255,7 +266,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<nint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -268,7 +280,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<nint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -282,7 +295,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<nint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -293,7 +307,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<nint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -313,7 +328,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<uint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -326,7 +342,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<uint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -340,7 +357,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<uint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -351,7 +369,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<uint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -371,7 +390,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<nuint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -384,7 +404,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<nuint>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -398,7 +419,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<nuint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -409,7 +431,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<nuint>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -429,7 +452,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<long>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -442,7 +466,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<long>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -456,7 +481,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<long>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -467,7 +493,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<long>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -487,7 +514,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<ulong>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -500,7 +528,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<ulong>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -514,7 +543,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<ulong>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -525,7 +555,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<ulong>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -545,7 +576,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<BigInteger>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -558,7 +590,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<BigInteger>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -572,7 +605,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<BigInteger>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -583,7 +617,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<BigInteger>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -603,7 +638,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<float>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -616,7 +652,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<float>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -630,7 +667,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<float>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -641,7 +679,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<float>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -661,7 +700,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<double>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -674,7 +714,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<double>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -688,7 +729,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<double>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -699,7 +741,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<double>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -719,7 +762,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<decimal>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -732,7 +776,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<decimal>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -746,7 +791,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<decimal>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -757,7 +803,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<decimal>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -777,7 +824,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<Guid>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -790,7 +838,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<Guid>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -804,7 +853,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<Guid>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -815,7 +865,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<Guid>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -835,7 +886,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<TimeSpan>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -848,7 +900,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<TimeSpan>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -862,7 +915,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<TimeSpan>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -873,7 +927,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<TimeSpan>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -893,7 +948,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<TimeOnly>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -906,7 +962,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<TimeOnly>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -920,7 +977,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<TimeOnly>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -931,7 +989,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<TimeOnly>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -951,7 +1010,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateTime>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -964,7 +1024,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateTime>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -978,7 +1039,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateTime>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -989,7 +1051,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateTime>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1009,7 +1072,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateTimeOffset>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1022,7 +1086,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateTimeOffset>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1036,7 +1101,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateTimeOffset>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1047,7 +1113,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateTimeOffset>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1067,7 +1134,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateOnly>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1080,7 +1148,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<DateOnly>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1094,7 +1163,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateOnly>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1105,7 +1175,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<DateOnly>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1125,7 +1196,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<byte>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1138,7 +1210,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<byte>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1152,7 +1225,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<byte>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1163,7 +1237,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<byte>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1183,7 +1258,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<sbyte>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1196,7 +1272,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<sbyte>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1210,7 +1287,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<sbyte>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1221,7 +1299,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<sbyte>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1241,7 +1320,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<char>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1254,7 +1334,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
 
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(message, argument);
+        var messageProvider = new SingleFormattableArgumentMessageLogMessageRenderer<char>(message,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
@@ -1268,7 +1349,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<char>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider));
     }
@@ -1279,7 +1361,8 @@ public readonly partial struct Logger(LoggerRuntime loggerRuntime, string logger
     {
         var time = _timeProvider.Now;
 
-        var messageProvider = ValueTypeArgumentMessageLogMessageProviderFactory.CreateMessageProvider(messageFactory, argument);
+        var messageProvider = new SingleFormattableArgumentMessageFactoryLogMessageRenderer<char>(messageFactory,
+            argument);
 
         PublishLog(loggerContext, new LogContext(loggerSource, level, time, messageProvider)
         {
