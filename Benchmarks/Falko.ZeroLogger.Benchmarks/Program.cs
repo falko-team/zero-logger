@@ -53,6 +53,7 @@ public class DateTimeOffsetBenchmark
     }
 }
 
+[MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net90)]
 [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net80)]
 [MinColumn, MeanColumn, MaxColumn]
@@ -82,11 +83,20 @@ public class LogIgnoringBenchmark
     }
 
     [Benchmark]
-    public void IgnoreLazyZeroLoggerLog()
+    public void IgnoreZeroLoggerStaticLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
             ZeroLogger.Trace(static () => "Iteration {IterationNumber}", iteration);
+        }
+    }
+
+    [Benchmark]
+    public void IgnoreZeroLoggerHandlingLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            ZeroLogger.Trace($"Iteration {iteration}");
         }
     }
 
@@ -120,7 +130,7 @@ public class LogRenderingBenchmark
         RenderingLoggerConfigurer.Configure();
     }
 
-    [Benchmark(Baseline = true)]
+    [Benchmark]
     public void RenderZeroLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
@@ -130,6 +140,24 @@ public class LogRenderingBenchmark
     }
 
     [Benchmark]
+    public void RenderZeroLoggerHandlingLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            ZeroLogger.Info($"Iteration {iteration}");
+        }
+    }
+
+    [Benchmark]
+    public void RenderZeroLoggerStaticLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            ZeroLogger.Info(static () => "Iteration {IterationNumber}", iteration);
+        }
+    }
+
+    [Benchmark(Baseline = true)]
     public void RenderNLogLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
@@ -159,7 +187,7 @@ public class LogWritingBenchmark
         EmptyLoggerConfigurer.Configure();
     }
 
-    [Benchmark(Baseline = true)]
+    [Benchmark]
     public void RenderZeroLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
@@ -169,6 +197,24 @@ public class LogWritingBenchmark
     }
 
     [Benchmark]
+    public void RenderZeroLoggerHandlingLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            ZeroLogger.Info($"Iteration {iteration}");
+        }
+    }
+
+    [Benchmark]
+    public void RenderZeroLoggerStaticLog()
+    {
+        for (var iteration = 0; iteration < Iterations; iteration++)
+        {
+            ZeroLogger.Info(static () => "Iteration {IterationNumber}", iteration);
+        }
+    }
+
+    [Benchmark(Baseline = true)]
     public void RenderNLogLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
