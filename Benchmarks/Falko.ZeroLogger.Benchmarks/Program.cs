@@ -58,7 +58,7 @@ public class DateTimeOffsetBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogIgnoringBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Runtimes.LoggerRuntime.Global.LoggerFactory
         .CreateLoggerOfType<LogIgnoringBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
@@ -82,7 +82,7 @@ public class LogIgnoringBenchmark
     }
 
     [Benchmark]
-    public void IgnoreZeroLoggerLog()
+    public void IgnoreLazyZeroLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
@@ -91,15 +91,13 @@ public class LogIgnoringBenchmark
     }
 
     [Benchmark]
-    public void IgnoreZeroLoggerLog2()
+    public void IgnoreZeroLoggerLog()
     {
         for (var iteration = 0; iteration < Iterations; iteration++)
         {
             ZeroLogger.Trace("Iteration {IterationNumber}", iteration);
         }
     }
-
-
 }
 
 [MemoryDiagnoser]
@@ -108,7 +106,7 @@ public class LogIgnoringBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogRenderingBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Runtimes.LoggerRuntime.Global.LoggerFactory
         .CreateLoggerOfType<LogRenderingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
@@ -147,7 +145,7 @@ public class LogRenderingBenchmark
 [MinColumn, MeanColumn, MaxColumn]
 public class LogWritingBenchmark
 {
-    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Factories.LoggerFactory.Global
+    private static readonly System.Logging.Loggers.Logger ZeroLogger = System.Logging.Runtimes.LoggerRuntime.Global.LoggerFactory
         .CreateLoggerOfType<LogWritingBenchmark>();
 
     private static readonly NLog.Logger NLogLogger = NLog.LogManager
