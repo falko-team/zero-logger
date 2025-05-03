@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace System.Logging.Loggers;
 
+[StructLayout(LayoutKind.Auto)]
 [method: MethodImpl(MethodImplOptions.AggressiveInlining)]
 public readonly partial struct Logger(LoggerRuntime loggerRuntime, string loggerSource)
 {
