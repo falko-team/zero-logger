@@ -3,6 +3,7 @@ using System.Logging.Factories;
 using System.Logging.Logs;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace System.Logging.Loggers;
@@ -10,6 +11,28 @@ namespace System.Logging.Loggers;
 public readonly partial struct Logger
 {
     #region Log()
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Fatal(DefaultInterpolatedStringHandler messageHandler)
+    {
+        var loggerContext = loggerRuntime.LoggerContext;
+
+        if (loggerContext.IsFatalLevelEnabled)
+        {
+            Log(loggerContext, LogLevel.Fatal, messageHandler.ToStringAndClear());
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Fatal(Exception? exception, DefaultInterpolatedStringHandler messageHandler)
+    {
+        var loggerContext = loggerRuntime.LoggerContext;
+
+        if (loggerContext.IsFatalLevelEnabled)
+        {
+            Log(loggerContext, LogLevel.Fatal, exception, messageHandler.ToStringAndClear());
+        }
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Fatal([Localizable(false)][StructuredMessageTemplate] string? message)
