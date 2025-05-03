@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace System.Logging.Factories;
 
-public sealed class LoggerFactory(LoggerRuntime loggerRuntime)
+public readonly struct LoggerFactory(LoggerRuntime loggerRuntime)
 {
-    public static readonly LoggerFactory Global = new(LoggerRuntime.Global);
+    public static readonly LoggerFactory Global = LoggerRuntime.Global.LoggerFactory;
 
     public Logger CreateLoggerOfName(string name)
     {

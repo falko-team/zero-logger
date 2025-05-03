@@ -1,6 +1,7 @@
 using System.Logging.Builders;
 using System.Logging.Contexts;
 using System.Logging.Debugs;
+using System.Logging.Factories;
 using System.Logging.Targets;
 using System.Runtime.CompilerServices;
 
@@ -18,7 +19,14 @@ public sealed partial class LoggerRuntime
 
     private CancellationTokenSource? _contextCancellation;
 
-    internal volatile LoggerContext Context = LoggerContext.Empty;
+    internal volatile LoggerContext LoggerContext = LoggerContext.Empty;
+
+    public readonly LoggerFactory LoggerFactory;
+
+    public LoggerRuntime()
+    {
+        LoggerFactory = new LoggerFactory(this);
+    }
 
     public void Initialize(LoggerContextBuilder loggerBuilder, CancellationToken cancellationToken)
     {
@@ -30,7 +38,7 @@ public sealed partial class LoggerRuntime
 
             _contextCancellation = contextCancellation;
             var context = loggerBuilder.Build(contextCancellation.Token);
-            Context = context;
+            LoggerContext = context;
 
             var targetsLength = context.Targets.Length;
 
@@ -55,7 +63,7 @@ public sealed partial class LoggerRuntime
     {
         lock (_locker)
         {
-            var loggerContext = Context;
+            var loggerContext = LoggerContext;
 
             if (loggerContext.Cancellation.IsCancellationRequested) return;
 
@@ -101,7 +109,7 @@ public sealed partial class LoggerRuntime
             }
 
             _contextCancellation = null;
-            Context = LoggerContext.Empty;
+            LoggerContext = LoggerContext.Empty;
         }
     }
 
