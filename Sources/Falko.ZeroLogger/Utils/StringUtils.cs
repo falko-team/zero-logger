@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Logging.Utils;
 
-public static class StringUtils
+internal static class StringUtils
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string? ToString<T>(T value)
