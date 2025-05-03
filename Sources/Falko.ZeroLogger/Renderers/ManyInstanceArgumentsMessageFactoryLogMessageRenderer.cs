@@ -26,7 +26,7 @@ internal sealed class ManyInstanceArgumentsMessageFactoryLogMessageRenderer
         {
             var argumentObject = Unsafe.Add(ref argumentFactoriesRef, argumentObjectIndex);
 
-            Unsafe.Add(ref argumentsRef, argumentObjectIndex) = argumentObject?.ToString();
+            Unsafe.Add(ref argumentsRef, argumentObjectIndex) = StringUtils.ToString(argumentObject);
         }
 
         var interpolatedMessage = MessageArgumentsInterpolationUtils.Interpolate(messageFactory(),
