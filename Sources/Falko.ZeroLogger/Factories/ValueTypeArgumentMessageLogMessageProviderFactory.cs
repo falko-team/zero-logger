@@ -13,14 +13,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, short argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<short>(message,
-            new LogMessageArgument<short>(argument, static x => x.ToString()));
+            new LogMessageArgument<short>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, short argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<short>(messageFactory,
-            new LogMessageArgument<short>(argument, static x => x.ToString()));
+            new LogMessageArgument<short>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -31,14 +31,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, ushort argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<ushort>(message,
-            new LogMessageArgument<ushort>(argument, static x => x.ToString()));
+            new LogMessageArgument<ushort>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, ushort argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<ushort>(messageFactory,
-            new LogMessageArgument<ushort>(argument, static x => x.ToString()));
+            new LogMessageArgument<ushort>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -49,14 +49,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, int argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<int>(message,
-            new LogMessageArgument<int>(argument, static x => x.ToString()));
+            new LogMessageArgument<int>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, int argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<int>(messageFactory,
-            new LogMessageArgument<int>(argument, static x => x.ToString()));
+            new LogMessageArgument<int>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -67,14 +67,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, nint argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<nint>(message,
-            new LogMessageArgument<nint>(argument, static x => x.ToString()));
+            new LogMessageArgument<nint>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, nint argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<nint>(messageFactory,
-            new LogMessageArgument<nint>(argument, static x => x.ToString()));
+            new LogMessageArgument<nint>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -85,14 +85,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, uint argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<uint>(message,
-            new LogMessageArgument<uint>(argument, static x => x.ToString()));
+            new LogMessageArgument<uint>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, uint argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<uint>(messageFactory,
-            new LogMessageArgument<uint>(argument, static x => x.ToString()));
+            new LogMessageArgument<uint>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -103,14 +103,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, nuint argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<nuint>(message,
-            new LogMessageArgument<nuint>(argument, static x => x.ToString()));
+            new LogMessageArgument<nuint>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, nuint argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<nuint>(messageFactory,
-            new LogMessageArgument<nuint>(argument, static x => x.ToString()));
+            new LogMessageArgument<nuint>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -121,14 +121,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, long argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<long>(message,
-            new LogMessageArgument<long>(argument, static x => x.ToString()));
+            new LogMessageArgument<long>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, long argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<long>(messageFactory,
-            new LogMessageArgument<long>(argument, static x => x.ToString()));
+            new LogMessageArgument<long>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -139,14 +139,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, ulong argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<ulong>(message,
-            new LogMessageArgument<ulong>(argument, static x => x.ToString()));
+            new LogMessageArgument<ulong>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, ulong argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<ulong>(messageFactory,
-            new LogMessageArgument<ulong>(argument, static x => x.ToString()));
+            new LogMessageArgument<ulong>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -157,14 +157,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, BigInteger argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<BigInteger>(message,
-            new LogMessageArgument<BigInteger>(argument, static x => x.ToString()));
+            new LogMessageArgument<BigInteger>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, BigInteger argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<BigInteger>(messageFactory,
-            new LogMessageArgument<BigInteger>(argument, static x => x.ToString()));
+            new LogMessageArgument<BigInteger>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -176,7 +176,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageLogMessageRenderer<float>(message,
-            new LogMessageArgument<float>(argument, static x => x.ToString()));
+            new LogMessageArgument<float>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -184,7 +184,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageFactoryLogMessageRenderer<float>(messageFactory,
-            new LogMessageArgument<float>(argument, static x => x.ToString()));
+            new LogMessageArgument<float>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -196,7 +196,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageLogMessageRenderer<double>(message,
-            new LogMessageArgument<double>(argument, static x => x.ToString()));
+            new LogMessageArgument<double>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -204,7 +204,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageFactoryLogMessageRenderer<double>(messageFactory,
-            new LogMessageArgument<double>(argument, static x => x.ToString()));
+            new LogMessageArgument<double>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -216,7 +216,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageLogMessageRenderer<decimal>(message,
-            new LogMessageArgument<decimal>(argument, static x => x.ToString()));
+            new LogMessageArgument<decimal>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -224,7 +224,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageFactoryLogMessageRenderer<decimal>(messageFactory,
-            new LogMessageArgument<decimal>(argument, static x => x.ToString()));
+            new LogMessageArgument<decimal>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -235,14 +235,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, Guid argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<Guid>(message,
-            new LogMessageArgument<Guid>(argument, static x => x.ToString()));
+            new LogMessageArgument<Guid>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, Guid argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<Guid>(messageFactory,
-            new LogMessageArgument<Guid>(argument, static x => x.ToString()));
+            new LogMessageArgument<Guid>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -253,14 +253,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, TimeSpan argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<TimeSpan>(message,
-            new LogMessageArgument<TimeSpan>(argument, static x => x.ToString()));
+            new LogMessageArgument<TimeSpan>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, TimeSpan argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<TimeSpan>(messageFactory,
-            new LogMessageArgument<TimeSpan>(argument, static x => x.ToString()));
+            new LogMessageArgument<TimeSpan>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -271,14 +271,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, TimeOnly argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<TimeOnly>(message,
-            new LogMessageArgument<TimeOnly>(argument, static x => x.ToString()));
+            new LogMessageArgument<TimeOnly>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, TimeOnly argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<TimeOnly>(messageFactory,
-            new LogMessageArgument<TimeOnly>(argument, static x => x.ToString()));
+            new LogMessageArgument<TimeOnly>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -290,7 +290,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageLogMessageRenderer<DateTime>(message,
-            new LogMessageArgument<DateTime>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateTime>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -298,7 +298,7 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     {
         // ReSharper disable once SpecifyACultureInStringConversionExplicitly
         return new SingleArgumentMessageFactoryLogMessageRenderer<DateTime>(messageFactory,
-            new LogMessageArgument<DateTime>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateTime>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -309,14 +309,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, DateTimeOffset argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<DateTimeOffset>(message,
-            new LogMessageArgument<DateTimeOffset>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateTimeOffset>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, DateTimeOffset argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<DateTimeOffset>(messageFactory,
-            new LogMessageArgument<DateTimeOffset>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateTimeOffset>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -327,14 +327,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, DateOnly argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<DateOnly>(message,
-            new LogMessageArgument<DateOnly>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateOnly>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, DateOnly argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<DateOnly>(messageFactory,
-            new LogMessageArgument<DateOnly>(argument, static x => x.ToString()));
+            new LogMessageArgument<DateOnly>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -345,14 +345,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, byte argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<byte>(message,
-            new LogMessageArgument<byte>(argument, static x => x.ToString()));
+            new LogMessageArgument<byte>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, byte argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<byte>(messageFactory,
-            new LogMessageArgument<byte>(argument, static x => x.ToString()));
+            new LogMessageArgument<byte>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
@@ -363,14 +363,14 @@ internal static class ValueTypeArgumentMessageLogMessageProviderFactory
     public static ILogMessageRenderer CreateMessageProvider(string? message, sbyte argument)
     {
         return new SingleArgumentMessageLogMessageRenderer<sbyte>(message,
-            new LogMessageArgument<sbyte>(argument, static x => x.ToString()));
+            new LogMessageArgument<sbyte>(argument, static x => x.ToString(null, null)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ILogMessageRenderer CreateMessageProvider(LogMessageFactory messageFactory, sbyte argument)
     {
         return new SingleArgumentMessageFactoryLogMessageRenderer<sbyte>(messageFactory,
-            new LogMessageArgument<sbyte>(argument, static x => x.ToString()));
+            new LogMessageArgument<sbyte>(argument, static x => x.ToString(null, null)));
     }
 
     #endregion
