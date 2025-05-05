@@ -20,7 +20,7 @@ LoggerRuntime.Dispose();
 
 Compare the performance of the Zero Logger with the NLog library.
 
-### Performance with Rendering of Log String with Three Same Layouts
+### Performance with Rendering of Log String with Three Same Layouts (One Hundred Dynamic Messages Iterations)
 
 ```bash
 BenchmarkDotNet v0.14.0, Ubuntu 24.04.2 LTS (Noble Numbat)
@@ -32,13 +32,19 @@ AMD EPYC-Rome Processor, 1 CPU, 2 logical cores and 1 physical core
 RunStrategy=Throughput
 ```
 
-| Method              | Runtime       | Mean     | Ratio | Allocated | Alloc Ratio |
-|-------------------- |-------------- |---------:|------:|----------:|------------:|
-| RenderZeroLoggerLog | .NET 9.0      | 16.80 us |  1.00 |  26.48 KB |        1.00 |
-| RenderNLogLoggerLog | .NET 9.0      | 46.16 us |  2.75 | 105.47 KB |        3.98 |
-|                     |               |          |       |           |             |
-| RenderZeroLoggerLog | .NET 8.0      | 18.75 us |  1.00 |  26.48 KB |        1.00 |
-| RenderNLogLoggerLog | .NET 8.0      | 46.96 us |  2.51 | 105.47 KB |        3.98 |
+| Method                      | Runtime       | Mean     | Ratio | Allocated | Alloc Ratio |
+|---------------------------- |-------------- |---------:|------:|----------:|------------:|
+| RenderZeroLoggerLog         | .NET 9.0      | 17.49 us |  0.38 |   25.7 KB |        0.24 |
+| RenderZeroLoggerHandlingLog | .NET 9.0      | 18.54 us |  0.40 |  24.14 KB |        0.23 |
+| RenderZeroLoggerStaticLog   | .NET 9.0      | 16.72 us |  0.36 |   25.7 KB |        0.24 |
+| RenderNLogLoggerLog         | .NET 9.0      | 46.11 us |  1.00 | 105.47 KB |        1.00 |
+|                             |               |          |       |           |             |
+| RenderZeroLoggerLog         | .NET 8.0      | 18.67 us |  0.39 |   25.7 KB |        0.24 |
+| RenderZeroLoggerHandlingLog | .NET 8.0      | 22.10 us |  0.46 |  24.14 KB |        0.23 |
+| RenderZeroLoggerStaticLog   | .NET 8.0      | 18.78 us |  0.39 |   25.7 KB |        0.24 |
+| RenderNLogLoggerLog         | .NET 8.0      | 48.20 us |  1.00 | 105.47 KB |        1.00 |
+
+
 
 ## License
 
