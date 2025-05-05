@@ -20,7 +20,7 @@ LoggerRuntime.Dispose();
 
 Compare the performance of the Zero Logger with the NLog library.
 
-### Performance with Rendering of Log String with Three Same Layouts (One Hundred Dynamic Messages Iterations)
+### Performance with One Hundred Dynamic Log Message Iterations with Rendering of Single Layour for Three Rendering Only Targets
 
 ```bash
 BenchmarkDotNet v0.14.0, Ubuntu 24.04.2 LTS (Noble Numbat)
