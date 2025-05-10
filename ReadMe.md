@@ -5,24 +5,23 @@
 High-Performance Static Structured Logger with Minimal Allocations.
 
 ```C#
-var loggerRuntime = LoggerRuntime.Global;
+using var loggerRuntime = LoggerRuntime.Global;
 
 loggerRuntime.Initialize(new LoggerContextBuilder()
     .SetLevel(LogLevels.InfoAndAbove)
+    .AddTarget(SimpleLogContextRenderer.Instance, LoggerConsoleTarget.Instance)
     .AddTarget(SimpleLogContextRenderer.Instance, new LoggerFileTarget("program", "./Logs")));
 
 var logger = loggerRuntime.LoggerFactory.CreateLoggerOfType<Program>();
 
 logger.Info(static () => "PI is {PI}", static () => Math.PI.ToString("F"));
-
-loggerRuntime.Dispose();
 ```
 
 ## Performance
 
 Compare the performance of the Zero Logger with the NLog library.
 
-### Performance with One Hundred Dynamic Log Message Iterations with Rendering of Single Layour for Three Rendering Only Targets
+### Performance with One Hundred Dynamic Log Message Iterations with Same Static Layout for Three Rendering Only Targets
 
 ```bash
 BenchmarkDotNet v0.14.0, Ubuntu 24.04.2 LTS (Noble Numbat)
