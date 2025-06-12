@@ -17,6 +17,8 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Description">
+        <PackageIcon>Assets/Icon512.png</PackageIcon>
+        <PackageIconUrl>https://raw.githubusercontent.com/falko-team/zero-logger/main/Icon512.png</PackageIconUrl>
         <PackageProjectUrl>https://github.com/falko-team/zero-logger</PackageProjectUrl>
         <RepositoryUrl>https://github.com/falko-team/zero-logger.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
@@ -27,6 +29,11 @@
     </PropertyGroup>
 
     <ItemGroup Label="Assets">
+        <None Include="../../Icon512.png">
+            <Pack>true</Pack>
+            <Visible>false</Visible>
+            <PackagePath>Assets</PackagePath>
+        </None>
         <None Include="../../License.md">
             <Pack>true</Pack>
             <Visible>false</Visible>
