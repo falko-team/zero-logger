@@ -16,8 +16,9 @@
     </PropertyGroup>
 
     <PropertyGroup Label="Description">
-        <Company>Falko Team</Company>
+        <Company>Falko</Company>
         <Authors>Rima Falko; Timur Falko</Authors>
         <Description>High-Performance Static Structured Logger with Minimal Allocations</Description>
+        <Copyright>Copyright (C) 2025, Falko</Copyright>
     </PropertyGroup>
 </Project>

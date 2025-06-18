@@ -8,4 +8,4 @@ High-Performance Static Structured Logger with Minimal Allocations.
 
 This project is licensed under the [BSD 2-Clause License](https://github.com/falko-team/zero-logger/blob/main/License.md).
 
-**© 2025, Falko Team**
+**© 2025, Falko**
