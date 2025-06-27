@@ -628,6 +628,7 @@ public sealed class LoggerFileTarget : LoggerTarget
         try
         {
 	        _logsStream!.Write(_writingBuffer.GetBuffer(), 0, (int)_writingBuffer.Length);
+            _logsStream!.Flush();
 
             success = true;
         }
